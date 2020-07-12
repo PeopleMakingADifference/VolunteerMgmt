@@ -1,6 +1,6 @@
 const messaging = require('../messaging/messaging.js');
-module.exports = function(app, dbconn){
-	// The parameters must be uid and assignment
+module.exports = function(app, dbconn) {
+    // The parameters must be uid and assignment
     app.post('/update_assignment', function(req, res) {
         dbconn().then((db) => {
             // if document with argument id exists then update, otherwise return UID not found
@@ -23,14 +23,13 @@ module.exports = function(app, dbconn){
                         }
                     }
                     messaging.messageOne(dbconn, parseInt(req.body.uid), payload)
-                    .then(response => {
+                    .then((response) => {
                         console.log('sent', response);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.error('push error', err);
                     });
                     res.send('Successfully updated assignment');
-
                 } else {
                     console.error('UID NOT FOUND:', req.body.uid);
                     res.status(400);

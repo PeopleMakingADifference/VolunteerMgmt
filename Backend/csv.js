@@ -133,8 +133,8 @@ class CSV_parser {
   }
 
   generate_event_id(length){
-    // allowed characters: A-Z, 0-9
-    const spaces = [ [48, 57], [65, 90] ];
+    // allowed characters: A-Z, 2-9 (no I,O or 0,1)
+    const spaces = [ [50, 57], [65, 72], [74, 78], [80, 90] ];
     let str = "";
     for (let i=0; i<length; i++){
       // pick letter or number, then pick a character and append it
