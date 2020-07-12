@@ -8,6 +8,7 @@
 *.so
 MobileFrontend/src/**/.js
 MobileFrontent/src/**/.js.map
+DesktopFrontend/dist/*
 
 # Packages #
 ############
