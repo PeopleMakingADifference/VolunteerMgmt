@@ -145,4 +145,8 @@ export class DashboardComponent implements OnInit {
     bowl.deleting = false;
   }
 
+  refresh(): void {
+    this.router.navigateByUrl('/', {skipLocationChange: false})
+    .then(() => this.router.navigate(['/dashboard']));
+  }
 }
