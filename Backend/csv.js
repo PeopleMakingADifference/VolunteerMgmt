@@ -20,19 +20,20 @@ class CSV_parser {
               // There are ~89 columns in the CSV, and we only care about a few of them.
               // So, this is a sparse array containing the ones we want, and empty space
               // for every one we don't want.
-              headers: [
-                , , , , , ,
-                "FirstName",
-                "LastName", , , , , , , , , , , ,
-                "Email",
-                "CellPhone", , , , , , , , , , , , ,
-                "ROLE",
-                "BACKUP ROLE", , , , , , , , , ,
-                'Room', , , , , , , , , ,
-                "TRAINING DATE(s)", , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
-              ],
+              // headers: [
+              //   , , , , , ,
+              //   "FirstName",
+              //   "LastName", , , , , , , , , , , ,
+              //   "Email",
+              //   "CellPhone", , , , , , , , , , , , ,
+              //   "ROLE",
+              //   "BACKUP ROLE", , , , , , , , , ,
+              //   'Room', , , , , , , , , ,
+              //   "TRAINING DATE(s)", , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
+              // ],
               // Replace the first line of the CSV file (the header line) with our sparse array.
-              renameHeaders: true
+              // renameHeaders: true
+              headers: true
             })
             .on('data', (row) => {
               let newRow = {
@@ -52,6 +53,10 @@ class CSV_parser {
                 feedback.push(`Skipped:    ${rowRepresentation}<br />This row was missing either FirstName, LastName, Email, CellPhone, ROLE, or Room data.`);
               }
               
+            })
+            .on('error', (row, rowNumber) => {
+              feedback.push('Invalid data file!');
+              res({rows: null, feedback: feedback});
             })
             .on('end', () => {
               if (feedback.length === 0){

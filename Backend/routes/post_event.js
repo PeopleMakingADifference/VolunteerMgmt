@@ -47,10 +47,12 @@ module.exports = function(app, dbconn){
           const {rows, feedback} = parseResult;
 
           // have the parser handle the database updating
-          parser.insert(dbconn, String(req.body.eventName), rows);
+          if (rows) {
+            parser.insert(dbconn, String(req.body.eventName), rows);
+          }
 
           // Removed "Skiped" error as it's just a warning
-          if (feedback.String && !feedback.String.contains("Skipped:")) {
+          if (feedback && !String(feedback).includes('Skipped:')) {
             res.send(feedback.join('<br />'));
           } else {
             res.send('Successfully added event');
