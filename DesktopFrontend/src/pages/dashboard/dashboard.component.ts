@@ -183,6 +183,18 @@ export class DashboardComponent implements OnInit {
     }, this.showError(`update isClosed for ${bowl.name}`));
   }
 
+  archiveBowl(bowl) {
+    var fileContents = JSON.stringify(bowl, null, '\t');
+    var filename = bowl.name + ".json";
+    var filetype = "application/json";
+    var a = document.createElement("a");
+    a.href = "data:" + filetype + ";base64," + btoa(fileContents);
+    a['download'] = filename;
+    var e = document.createEvent("MouseEvents");
+    e.initMouseEvent("click", true, false, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
+
   refresh(): void {
     this.router.navigateByUrl('/', {skipLocationChange: false})
     .then(() => this.router.navigate(['/dashboard']));

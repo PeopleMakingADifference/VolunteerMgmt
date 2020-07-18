@@ -20,6 +20,7 @@
         </div>
         <button *ngIf="!bowl.isClosed && !bowl.closing" class="pmd-button-red" (click)="closeBowl(bowl)">Close Event</button>
         <button *ngIf="bowl.isClosed===true" class="pmd-button" (click)="reopenBowl(bowl)">Re-Open Event</button>
+        <button class="pmd-button" (click)="archiveBowl(bowl)">Archive Event</button>
         <div *ngIf="bowl.closing===true">
           <p>Are you sure you want to close the event "{{bowl.name}}"?</p>
           <button class="pmd-button" (click)="confirmClose(bowl)">Confirm</button>
