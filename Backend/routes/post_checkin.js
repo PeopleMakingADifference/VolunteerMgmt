@@ -14,7 +14,11 @@ module.exports = function(app, dbconn) {
           }
         ).toArray((err, items) => {
           if (items.length > 0) {
-            if (!items[0].volunteers[0].checkin) {
+            if (items[0].isClosed===true) {
+              res.status(400).send({'message': 'This event has been closed.'});
+              db.close();
+              return;
+            } else if (!items[0].volunteers[0].checkin) {
               db.collection('bowls').update(
                 {
                   'id': req.body.eventId.toUpperCase(),

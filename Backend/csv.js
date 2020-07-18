@@ -71,7 +71,7 @@ class CSV_parser {
     });
   }
   
-  async insert(dbconn, event_name, data){
+  async insert(dbconn, event_name, data) {
     let db = await dbconn();   
     // start by finding the bowl which has the volunteer with the highest ID
     let err, bowls = await db.collection('bowls').find().sort({'volunteers.id': -1}).limit(1).toArray();

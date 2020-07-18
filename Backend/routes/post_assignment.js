@@ -17,11 +17,11 @@ module.exports = function(app, dbconn) {
                     // send the notification to alert the user that their assignment has been updated
                     const payload = {
                         notification: {
-                            title: `PMD: ${items[0].name}`,
-                            body: `Assignment update: ${req.body.assignment}`,
-                            icon: `fcm_push_icon`,
-                        }
-                    }
+                            title: 'PMD: ${items[0].name}',
+                            body: 'Assignment update: ${req.body.assignment}',
+                            icon: 'fcm_push_icon',
+                        },
+                    };
                     messaging.messageOne(dbconn, parseInt(req.body.uid), payload)
                     .then((response) => {
                         console.log('sent', response);
@@ -37,7 +37,7 @@ module.exports = function(app, dbconn) {
                 }
                 db.close();
             });
-
         });
     });
-}
+};
+

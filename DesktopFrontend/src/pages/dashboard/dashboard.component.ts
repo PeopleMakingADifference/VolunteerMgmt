@@ -145,6 +145,44 @@ export class DashboardComponent implements OnInit {
     bowl.deleting = false;
   }
 
+  closeBowl(bowl){
+    bowl.closing = true;
+  }
+
+  confirmClose(bowl){
+    this.errorMessage = '';
+    this.http.post('/update_is_closed',
+      {
+        eventId: bowl.id,
+        isClosed: true
+      }
+    )
+    .subscribe((res) => {
+      bowl.isClosed = true;
+      bowl.closing = false;
+      console.log('updated isClosed');
+    }, this.showError(`update isClosed for ${bowl.name}`));
+  }
+
+  cancelClose(bowl){
+    console.log("cancel close");
+    bowl.closing = false;
+  }
+
+  reopenBowl(bowl){
+    this.errorMessage = '';
+    this.http.post('/update_is_closed',
+      {
+        eventId: bowl.id,
+        isClosed: false
+      }
+    )
+    .subscribe((res) => {
+      bowl.isClosed = false;
+      console.log('updated isClosed');
+    }, this.showError(`update isClosed for ${bowl.name}`));
+  }
+
   refresh(): void {
     this.router.navigateByUrl('/', {skipLocationChange: false})
     .then(() => this.router.navigate(['/dashboard']));

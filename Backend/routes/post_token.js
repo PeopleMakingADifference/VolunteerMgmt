@@ -1,4 +1,4 @@
-module.exports = function(app, dbconn){
+module.exports = function(app, dbconn) {
   // The parameters must be uid and token
     app.post('/update_token', function(req, res) {
         dbconn().then((db) => {
@@ -8,7 +8,7 @@ module.exports = function(app, dbconn){
                     db.collection('bowls').update({'volunteers.id': parseInt(req.body.uid)},
                         {
                             $set: {
-                                'volunteers.$.token': req.body.token
+                                'volunteers.$.token': req.body.token,
                             },
                         }
                     );
@@ -19,7 +19,6 @@ module.exports = function(app, dbconn){
                 }
                 db.close();
             });
-            
         });
     });
-}
+};

@@ -67,6 +67,20 @@ export class AppComponent implements OnInit {
 
   }
 
+  postIsClosed(bowl: any, is_closed: boolean) {
+    this.errorMessage = '';
+    this.http.post('/update_is_closed',
+      {
+        eventId: bowl.id,
+        isClosed : is_closed
+      }
+    )
+    .subscribe((res) => {
+      bowl.isClosed = is_closed;
+    }, this.showError(`update isClosed for ${bowl.name}`));
+
+  }
+
   enableEditing(volunteer: any) {
     volunteer.edit = !volunteer.edit;
   }

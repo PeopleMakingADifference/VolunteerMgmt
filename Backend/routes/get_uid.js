@@ -1,4 +1,4 @@
-module.exports = function(app, dbconn){
+module.exports = function(app, dbconn) {
     app.get('/uid/:uid', function(req, res) {
         dbconn().then((db) => {
             result = db.collection('bowls').find({'volunteers.id': parseInt(req.params.uid)}, {'volunteers.$': 1}).toArray(function(err, items) {
@@ -8,7 +8,7 @@ module.exports = function(app, dbconn){
                     res.send({
                         'name': name,
                         'assignment': assignment,
-                        'location': location
+                        'location': location,
                     });
                 } else {
                     res.status(400);
@@ -16,7 +16,7 @@ module.exports = function(app, dbconn){
                 }
                 db.close();
             });
-            
         });
     });
-}
+};
+
