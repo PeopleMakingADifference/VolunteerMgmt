@@ -100,7 +100,9 @@
           </tr>
         </table>
       </ul>
-
+      <div *ngIf="bowl.isClosed!==true">
+        <button class="pmd-button" (click)="addVolunteer(bowl)">Add Volunteer</button>
+      </div>
     </div>
   </div>
 </div>

@@ -195,6 +195,10 @@ export class DashboardComponent implements OnInit {
     a.dispatchEvent(e);
   }
 
+  addVolunteer(bowl){
+    this.router.navigate(['/add-volunteer', bowl.id]);
+  }
+
   refresh(): void {
     this.router.navigateByUrl('/', {skipLocationChange: false})
     .then(() => this.router.navigate(['/dashboard']));
