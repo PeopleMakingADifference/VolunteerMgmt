@@ -12,9 +12,11 @@ export class AddVolunteerComponent implements OnInit {
 
   csvFile: any;
   nameFieldText: string;
+  emailFieldText: string;
   locationFieldText: string;
   assignmentFieldText: string;
   phoneFieldText: string;
+  phoneNumber: number;
   feedback: string;
   showFeedback: boolean = false;
   bowlID: string;
@@ -35,6 +37,10 @@ export class AddVolunteerComponent implements OnInit {
       this.feedback = "Please add the volunteer name.";
       return;
     }
+    if(!this.emailFieldText){
+      this.feedback = "Please add the volunteer email.";
+      return;
+    }
     if(!this.assignmentFieldText){
       this.feedback = "Please add the volunteer assignment.";
       return;
@@ -47,14 +53,20 @@ export class AddVolunteerComponent implements OnInit {
       this.feedback = "Please add the volunteer phone number.";
       return;
     }
+    this.phoneNumber = parseInt(this.phoneFieldText, 10);
+    if (!this.phoneNumber || this.phoneNumber === NaN) {
+      this.feedback = "Please enter only digits for phone number.";
+      return;
+    }
 
     this.http.post('/add_volunteer',
     {
       bowlID: this.bowlID,
       volunteerName: this.nameFieldText,
+      volunteerEmail: this.emailFieldText,
       volunteerLocation: this.locationFieldText,
       volunteerAssignment: this.assignmentFieldText,
-      volunteerPhone: this.phoneFieldText
+      volunteerPhone: this.phoneNumber
     })
     .subscribe((res) => {
       if (res.status === 200) {
@@ -67,6 +79,10 @@ export class AddVolunteerComponent implements OnInit {
 
   onNameChange(newText: string){
     this.nameFieldText = newText;
+  }
+
+  onEmailChange(newText: string){
+    this.emailFieldText = newText;
   }
 
   onAssignmentChange(newText: string){
