@@ -16,13 +16,13 @@ module.exports = function(app, dbconn) {
                 maxId += 1;
                 data.id = maxId;
                 data.name = req.body.volunteerName;
+                data.email = req.body.volunteerEmail;
                 data.assignment = req.body.volunteerAssignment;
                 data.location = req.body.volunteerLocation;
                 data.checkout = false;
                 data.checkin = false;
                 data.phone = req.body.volunteerPhone;
 
-                console.log('new volunteer data:', data);
                 db.collection('bowls').update(
                     {
                         'id': req.body.bowlID.toUpperCase(),
