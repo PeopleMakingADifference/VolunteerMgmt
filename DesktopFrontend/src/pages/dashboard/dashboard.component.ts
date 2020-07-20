@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import 'rxjs/add/operator/map';
+import * as moment from 'moment';
 
 @Component({
   selector: 'dashboard',
@@ -62,6 +63,40 @@ export class DashboardComponent implements OnInit {
       this.showError(`update location for ${volunteer.name}`));
   }
 
+  postCheckin(volunteer: any) {
+    this.errorMessage = '';
+    let value = moment(volunteer.new_checkin, 'MM/DD/YY, hh:mm A').valueOf();
+    this.http.post('/update_admin_checkin',
+      {
+        uid : volunteer.id,
+        checkin : value
+      }
+    )
+    .subscribe(
+      ()=>{
+        volunteer.checkin = value;
+        console.log('updated checkin time')
+      },
+      this.showError(`update checkin for ${volunteer.name}`));
+  }
+
+  postCheckout(volunteer: any) {
+    this.errorMessage = '';
+    let value = moment(volunteer.new_checkout, 'MM/DD/YY, hh:mm A').valueOf();
+    this.http.post('/update_admin_checkout',
+      {
+        uid : volunteer.id,
+        checkout : value
+      }
+    )
+    .subscribe(
+      ()=>{
+        volunteer.checkout = value;
+        console.log('updated checkout time')
+      },
+      this.showError(`update checkout for ${volunteer.name}`));
+  }
+
   postMessage(bowl: any) {
     if(!bowl.new_message || bowl.new_message === bowl.message){
       console.log("nope");
@@ -97,6 +132,14 @@ export class DashboardComponent implements OnInit {
 
     if(volunteer.new_assignment !== volunteer.assignment && volunteer.new_assignment) {
       this.postAssignment(volunteer);
+    }
+
+    if(volunteer.new_checkin !== volunteer.checkin && volunteer.new_checkin) {
+      this.postCheckin(volunteer);
+    }
+
+    if(volunteer.new_checkout !== volunteer.checkout && volunteer.new_checkout) {
+      this.postCheckout(volunteer);
     }
 
     volunteer.edit = false;

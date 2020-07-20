@@ -67,24 +67,39 @@
                   (keyup)="volunteer.new_assignment = vassign.value"
                   value="{{ volunteer.assignment }}">
               </td>
+              <td *ngIf="!volunteer.edit">
+                {{ volunteer.assignment }}
+              </td>
               <td *ngIf="volunteer.edit">
                 <input type="text" name="vLoc" #vloc 
                 (keyup.enter)="saveEdits(volunteer)"
                 (keyup)="volunteer.new_location = vloc.value"
                 value="{{ volunteer.location }}">
               </td>
-              
-
-              <td *ngIf="!volunteer.edit">
-                {{ volunteer.assignment }}
-              </td>
               <td *ngIf="!volunteer.edit">
                 {{ volunteer.location }}
               </td>
+              <!--  Add this in and remove static case if editing of checkin time is needed
+              <td *ngIf="volunteer.edit">
+                <input type="text" name="vCheckin" #vcheckin
+                  (keyup.enter)="saveEdits(volunteer)"
+                  (keyup)="volunteer.new_checkin = vcheckin.value"
+                  value="{{ volunteer.checkin | volunteerTime }}">
+              </td>
+              <td *ngIf="!volunteer.edit">
+                {{ volunteer.checkin | volunteerTime }}
+              </td>
+              -->
               <td>
                 {{ volunteer.checkin | volunteerTime }}
               </td>
-              <td>
+              <td *ngIf="volunteer.edit">
+                <input type="text" name="vCheckout" #vcheckout
+                (keyup.enter)="saveEdits(volunteer)"
+                (keyup)="volunteer.new_checkout = vcheckout.value"
+                value="{{ volunteer.checkout | volunteerTime }}">
+              </td>
+              <td *ngIf="!volunteer.edit">
                 {{ volunteer.checkout | volunteerTime }}
               </td>
               <td>

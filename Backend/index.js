@@ -51,8 +51,8 @@ const genericDatabaseConnection = () => {
 
 // define our routes, which are each defined in their own files in ./routes
 const routes = [
-    'get_message', 'get_uid', 'post_checkout', 'post_location', 'get_root', 'post_assignment',
-    'post_checkout', 'post_checkin', 'post_message', 'post_token', 'post_verification', 'post_event',
+    'get_message', 'get_uid', 'post_checkout', 'post_location', 'get_root', 'post_assignment', 'post_admin_checkout',
+    'post_checkout', 'post_admin_checkin', 'post_checkin', 'post_message', 'post_token', 'post_verification', 'post_event',
     'post_checkout_reminder', 'post_checkout_reminded', 'post_event_deletion', 'post_isClosed', 'post_add_volunteer'];
 // for each route, initialize that route by passing the express app and database connection function
 for (let route of routes) {
