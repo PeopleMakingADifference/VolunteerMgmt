@@ -35,16 +35,20 @@
       <div *ngIf="bowl.isClosed!==true">
         <button class="pmd-button" (click)="sendCheckoutReminder(bowl)">Send Checkout Reminder</button>
         <p> 
-          <label class="Tahoma" for="message">Send a message to all volunteers:</label>
+          <label class="Tahoma" for="message">Send a message to:</label>
+          <select name="volunteerSelect" #volunteerSelect >
+            <option>All Volunteers</option>
+            <option *ngFor="let vol of bowl.volunteers">{{vol.name}} </option>
+          </select>
           <input 
             type="text" 
             name="message" 
             #message 
-            (keyup.enter)="postMessage(bowl)"
+            (keyup.enter)="postVolunteerMessage(bowl, volunteerSelect.value)"
             (keyup)="bowl.new_message = message.value"
             class="pmd-message"
           />
-          <button class="pmd-button" (click)="postMessage(bowl)">Send</button>
+          <button class="pmd-button" (click)="postVolunteerMessage(bowl, volunteerSelect.value)">Send</button>
         </p>
       </div>
 

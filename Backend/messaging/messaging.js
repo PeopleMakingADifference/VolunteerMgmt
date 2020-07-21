@@ -1,10 +1,10 @@
-const admin = require("firebase-admin");
+const admin = require('firebase-admin');
 const firebaseCreds = process.env.MONGODB_URI ? {
-  type : "service_account",
-  project_id: "people-making-a-difference",
-  auth_uri: "https://accounts.google.com/o/oauth2/auth",
-  token_uri: "https://accounts.google.com/o/oauth2/token",
-  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  type: 'service_account',
+  project_id: 'people-making-a-difference',
+  auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+  token_uri: 'https://accounts.google.com/o/oauth2/token',
+  auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
   private_key: JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
   client_email: process.env.FIREBASE_CLIENT_EMAIL,
@@ -12,96 +12,96 @@ const firebaseCreds = process.env.MONGODB_URI ? {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
 } : process.env.TRAVIS_MODE ? {} : require('./demo-key.json');
 
-if(process.env.TRAVIS_MODE === "True") {
-  const serviceAccount = "nothing, there's no API KEY";
+if (process.env.TRAVIS_MODE === 'True') {
+  // const serviceAccount = "nothing, there's no API KEY";
 } else {
   admin.initializeApp({
     credential: admin.credential.cert(firebaseCreds),
-    databaseURL: "https://people-making-a-difference.firebaseio.com"
+    databaseURL: 'https://people-making-a-difference.firebaseio.com',
   });
 }
 
 module.exports = {
-  messageOne: function(dbconn, uid, payload){
+  messageOne: function(dbconn, uid, payload) {
     return new Promise((resolve, reject) => {
-      dbconn().then(db => {
+      dbconn().then((db) => {
         db.collection('bowls').find(
           {
-            "volunteers": {
+            'volunteers': {
               $elemMatch: {
                 id: uid,
                 token: {
-                  $exists: true
-                }
-              }
-            }
+                  $exists: true,
+                },
+              },
+            },
           },
           {
-            'volunteers.$': 1
+            'volunteers.$': 1,
           }
         ).toArray((err, items) => {
-          if(items.length === 1){
+          if (items.length === 1) {
             const token = items[0].volunteers[0].token;
             admin.messaging().sendToDevice(token, payload)
-            .then(response => {
+            .then((response) => {
               resolve(response);
               return;
             })
-            .catch(err => {
+            .catch((err) => {
               reject(err);
               return;
-            })
+            });
           }
         });
       });
     });
   },
 
-  messageAll: function(dbconn, eventId, payload, filter = () => true ){
+  messageAll: function(dbconn, eventId, payload, filter = () => true ) {
     return new Promise((resolve, reject) => {
-      dbconn().then(db => {
+      dbconn().then((db) => {
         db.collection('bowls').find(
           {
-            "id": eventId
+            'id': eventId,
           }
         ).toArray((err, items) => {
-          if(items.length === 1){
+          if (items.length === 1) {
             // this will resolve a promise whether it rejects or resolves with no errors
-            const reflect = function(promise){
+            const reflect = function(promise) {
               return promise.then(
-                function(){
-                  return {status: "resolved"}
+                function() {
+                  return {status: 'resolved'};
                 },
-                function(reason){
-                  return {status: "rejected", reason: reason}
+                function(reason) {
+                  return {status: 'rejected', reason: reason};
                 });
-            }
-            let push_promises = [];
-            for(let volunteer of items[0].volunteers){
+            };
+            let pushPromises = [];
+            for (let volunteer of items[0].volunteers) {
               const token = volunteer.token;
-              if(token && filter(volunteer)){
-                push_promises.push(admin.messaging().sendToDevice(token, payload));
+              if (token && filter(volunteer)) {
+                pushPromises.push(admin.messaging().sendToDevice(token, payload));
               }
             }
             // await all the push notification attempts
             // it is ok and expected if some of them fail
-            Promise.all(push_promises.map(reflect))
+            Promise.all(pushPromises.map(reflect))
             .then((results) => {
-              let rejections = results.filter(x => x.status === "rejected");
-              for(rejected in rejections){
-                console.log(`Rejection reason: ${rejected.reason}`);
+              let rejections = results.filter((x) => x.status === 'rejected');
+              // eslint-disable-next-line guard-for-in
+              for (rejected in rejections) {
+                console.log('Rejection reason: ${rejected.reason}');
               }
-              resolve(`Attempted to send ${results.length}, ${results.filter(x => x.status === "resolved").length} succeeded.`);
+              resolve(`Attempted to send ${results.length}, ${results.filter((x) => x.status === 'resolved').length} succeeded.`);
               return;
             })
-            .catch(err => {
+            .catch((err) => {
               reject(err);
               return;
-            })
+            });
           }
         });
       });
     });
-
-  }
-}
+  },
+};

@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit {
       this.showError(`update checkout for ${volunteer.name}`));
   }
 
-  postMessage(bowl: any) {
+  postVolunteerMessage(bowl: any, user: any) {
     if(!bowl.new_message || bowl.new_message === bowl.message){
       console.log("nope");
       return;
@@ -106,11 +106,15 @@ export class DashboardComponent implements OnInit {
     this.http.post('/update_message',
       {
         eventId: bowl.id,
-        message : bowl.new_message
+        message : bowl.new_message,
+        toWho : user
       }
     )
     .subscribe((res) => {
-      bowl.message = bowl.new_message;
+      // Update bowl message if sent to all users
+      if (user === 'All Volunteers') {
+        bowl.message = bowl.new_message;
+      }
       console.log('updated message');
     }, this.showError(`update message for ${bowl.name}`));
 

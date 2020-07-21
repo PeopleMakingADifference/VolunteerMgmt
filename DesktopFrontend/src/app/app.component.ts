@@ -58,7 +58,8 @@ export class AppComponent implements OnInit {
     this.http.post('/update_message',
       {
         eventId: bowl.id,
-        message : input_message
+        message : input_message,
+        toWho : 'All Volunteers'
       }
     )
     .subscribe((res) => {
