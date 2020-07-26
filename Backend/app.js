@@ -1,5 +1,5 @@
 const mongodb = require('mongodb');
-// var uri = process.env.MONGODB_URI;
+// var uri = process.env.MONGODB_ATLAS_URI;
 const uri = 'mongodb://localhost:27017/pmd';
 test = require('assert');
 

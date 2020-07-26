@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const firebaseCreds = process.env.MONGODB_URI ? {
+const firebaseCreds = process.env.MONGODB_ATLAS_URI ? {
   type: 'service_account',
   project_id: 'people-making-a-difference',
   auth_uri: 'https://accounts.google.com/o/oauth2/auth',
