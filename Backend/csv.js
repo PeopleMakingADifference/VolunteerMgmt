@@ -43,7 +43,9 @@ class CSV_parser {
                 assignment: row['ROLE'],
                 location: row['Room']
               };
-              if(newRow.name && newRow.email && newRow.phone && newRow.assignment && newRow.location){
+
+              // We just need the name and phone for app functionality
+              if(newRow.name && (newRow.name != "") && newRow.phone && (newRow.phone != "")){
                 rows.push(newRow);
               } else {
                 const rowRepresentation = [
