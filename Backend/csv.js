@@ -1,4 +1,4 @@
-const fast_csv = require('fast-csv'),
+const csv = require('@fast-csv/parse'),
   fs = require('fs'),
   mongodb = require('mongodb');
 
@@ -15,7 +15,7 @@ class CSV_parser {
       try {
         fs.createReadStream(this.path)
           .pipe(
-            fast_csv({
+            csv.parse({
               // This may look strange, but it has a purpose. 
               // There are ~89 columns in the CSV, and we only care about a few of them.
               // So, this is a sparse array containing the ones we want, and empty space
