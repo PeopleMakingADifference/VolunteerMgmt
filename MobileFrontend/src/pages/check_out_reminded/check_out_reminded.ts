@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 
 import {ConfigService} from '../../app/config.service';
-import {User, UserService} from '../../app/user.service';
+import {UserService} from '../../app/user.service';
 
 @Component({selector: 'page-check-out', templateUrl: 'check_out_reminded.html'})
 export class CheckOutReminded {
