@@ -23,7 +23,7 @@ module.exports = function(app, dbconn) {
                 data.checkin = false;
                 data.phone = req.body.volunteerPhone;
 
-                db.collection('bowls').update(
+                db.collection('bowls').updateOne(
                     {
                         'id': req.body.bowlID.toUpperCase(),
                     },
@@ -35,11 +35,9 @@ module.exports = function(app, dbconn) {
                 ).catch((err) => {
                     res.status(400).send({'message': 'Error adding volunteer to database'});
                     console.error(err);
-                    db.close();
                     return;
                 });
                 res.send({'message': 'Successfully updated volunteers'});
-                db.close();
             });
         });
     });

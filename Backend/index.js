@@ -36,16 +36,25 @@ if (process.argv[2] == '--local' || process.argv[2] == '-l') {
 
 app.set('port', (process.env.PORT || 5000));
 
+const client = new mongodb.MongoClient(uri, {useUnifiedTopology: true});
+
 // package up the database connection into a promise to pass to our modularized backend components
 const genericDatabaseConnection = () => {
     return new Promise((res, rej) => {
-        mongodb.MongoClient.connect(uri, (err, db) => {
-            if (err) {
-                throw err;
-                rej(err);
-                return;
-            } else res(db);
-        });
+        if (!client.isConnected()) {
+            client.connect(function(err) {
+                if (err) {
+                    client.close();
+                    db = null;
+                    rej(err);
+                } else {
+                    console.log('Client connected to server');
+                    res(client.db());
+                }
+            });
+        } else {
+            res(client.db());
+        }
     });
 };
 
@@ -61,4 +70,10 @@ for (let route of routes) {
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
+});
+
+process.on('SIGINT', function() {
+    client.close();
+    console.log('Databse connection closed');
+    process.exit();
 });

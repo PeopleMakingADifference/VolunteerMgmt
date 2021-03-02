@@ -32,7 +32,7 @@ module.exports = function(app, dbconn) {
                         res.status(400);
                         res.send({'Error': 'This event has been closed.'});
                     } else if (!items[0].volunteers[0].checkout) {
-                        db.collection('bowls').update(
+                        db.collection('bowls').updateOne(
                             {
                                 'volunteers.id': parseInt(req.body.uid),
                                 'exit_id': req.body.exitId.toUpperCase(),
@@ -51,7 +51,6 @@ module.exports = function(app, dbconn) {
                     res.status(400);
                     res.send('Error: Incorrect UID or exit code.');
                 }
-                db.close();
             });
         });
     });

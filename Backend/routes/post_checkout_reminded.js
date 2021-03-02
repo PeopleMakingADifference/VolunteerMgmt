@@ -50,7 +50,7 @@ module.exports = function(app, dbconn) {
                         }
 
 
-                        db.collection('bowls').update(
+                        db.collection('bowls').updateOne(
                             {
                                 'volunteers.id': parseInt(req.body.uid),
                             },
@@ -69,7 +69,6 @@ module.exports = function(app, dbconn) {
                     res.status(400);
                     res.send('Error: Incorrect UID or exit code.');
                 }
-                db.close();
             });
         });
     });

@@ -101,7 +101,7 @@ class CSV_parser {
 
     // if it does not, create it and populate it with data
     if(event_query_bowls.length === 0){
-      let event_insert_err, event_insert_bowls = await db.collection('bowls').insert({
+      let event_insert_err, event_insert_bowls = await db.collection('bowls').insertOne({
         'name': event_name,
         'message': 'Thank you for volunteering!',
         'id': this.generate_event_id(5),
@@ -115,7 +115,7 @@ class CSV_parser {
     for (let row=0; row<data.length; row++) {
       // Start by attempting an update
       // we can't do an upsert here because the volunteer data is inside an array
-      let volunteer_update_err, volunteer_update_result = await db.collection('bowls').update({
+      let volunteer_update_err, volunteer_update_result = await db.collection('bowls').updateOne({
         'name': event_name,
         'volunteers.phone': String(data[row]['phone'])
       }, {
@@ -127,7 +127,7 @@ class CSV_parser {
       // if we didn't just update an existing row, we must be inserting a new row...
       if(volunteer_update_result.result.nModified === 0){
         // insert it by pushing the new row onto the volunteers array
-        let volunteer_push_err, volunteer_push_result = await db.collection('bowls').update({
+        let volunteer_push_err, volunteer_push_result = await db.collection('bowls').updateOne({
           'name': event_name
         }, {
           $push: {
@@ -136,7 +136,6 @@ class CSV_parser {
         });
       }
     } 
-    db.close(); 
   }
 
   generate_event_id(length){

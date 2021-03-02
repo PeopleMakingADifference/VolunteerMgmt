@@ -3,7 +3,7 @@ module.exports = function(app, dbconn) {
         dbconn().then((db) => {
             const isClosed = req.body.isClosed;
             console.log('isClosed:', isClosed, 'eventId:', req.body.eventId);
-            db.collection('bowls').update(
+            db.collection('bowls').updateOne(
                 {
                     'id': req.body.eventId.toUpperCase(),
                 },
@@ -14,7 +14,6 @@ module.exports = function(app, dbconn) {
                 }
             ).catch((err) => console.error(err));
             res.send('Successfully updated isClosed');
-            db.close();
         });
     });
 };

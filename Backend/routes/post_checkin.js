@@ -16,10 +16,9 @@ module.exports = function(app, dbconn) {
           if (items.length > 0) {
             if (items[0].isClosed===true) {
               res.status(400).send({'message': 'This event has been closed.'});
-              db.close();
               return;
             } else if (!items[0].volunteers[0].checkin) {
-              db.collection('bowls').update(
+              db.collection('bowls').updateOne(
                 {
                   'id': req.body.eventId.toUpperCase(),
                   'volunteers.phone': parseInt(req.body.phone),
@@ -30,7 +29,6 @@ module.exports = function(app, dbconn) {
               );
             } else if (items[0].volunteers[0].checkout) {
               res.status(400).send({'message': 'You have already checked out from this event.'});
-              db.close();
               return;
             }
             // send only the data we need to send
@@ -43,7 +41,6 @@ module.exports = function(app, dbconn) {
           } else {
             res.status(400).send({'message': 'Error - no volunteer found for this event with this phone number.'});
           }
-          db.close();
         });
       });
   });

@@ -104,8 +104,5 @@ mongodb.MongoClient.connect(uri, function(err, db) {
 
     // do some work here with the database.
     db.collection('bowls').insertMany(seedData, function(err, r) {});
-
-    // Close connection
-    db.close();
   }
 });

@@ -5,7 +5,7 @@ module.exports = function(dbconn, phone_num, uid, debug_mode){
 
     if(debug_mode === "true"){
         dbconn().then((db) => {
-            db.collection('bowls').update({'volunteers.id': parseInt(uid)},
+            db.collection('bowls').updateOne({'volunteers.id': parseInt(uid)},
             {
                 $set: {
                     'volunteers.$.verif_code': '1234'
@@ -35,7 +35,7 @@ module.exports = function(dbconn, phone_num, uid, debug_mode){
         .catch(err => console.error(err));
 
         dbconn().then((db) => {
-            db.collection('bowls').update({'volunteers.id': parseInt(uid)},
+            db.collection('bowls').updateOne({'volunteers.id': parseInt(uid)},
             {
                 $set: {
                     'volunteers.$.verif_code': verif_num,

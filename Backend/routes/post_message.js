@@ -13,7 +13,7 @@ module.exports = function(app, dbconn) {
 
                 // Update bowl message if not sending to a single volunteer
                 if (!sendOne) {
-                    db.collection('bowls').update(
+                    db.collection('bowls').updateOne(
                         {
                             'id': req.body.eventId.toUpperCase(),
                         },
@@ -70,7 +70,6 @@ module.exports = function(app, dbconn) {
                     }
                 });
             }
-            db.close();
         });
     });
 };

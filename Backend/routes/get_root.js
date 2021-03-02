@@ -8,7 +8,6 @@ module.exports = function(app, dbconn) {
                 dbconn().then((db) => {
                     result = db.collection('bowls').find().toArray(function(err, items) {
                         res.send(items);
-                        db.close();
                     });
                 });
         }).catch(function(error) {

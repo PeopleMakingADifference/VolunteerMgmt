@@ -6,7 +6,7 @@ module.exports = function(app, dbconn) {
             // if document with argument id exists then update, otherwise return UID not found
             existenceCheck = db.collection('bowls').find({'volunteers.id': parseInt(req.body.uid)}).toArray(function(err, items) {
                 if (items.length > 0) {
-                    db.collection('bowls').update({'volunteers.id': parseInt(req.body.uid)},
+                    db.collection('bowls').updateOne({'volunteers.id': parseInt(req.body.uid)},
                         {
                             $set: {
                                 'volunteers.$.location': req.body.location,
@@ -32,7 +32,6 @@ module.exports = function(app, dbconn) {
                     res.status(400);
                     res.send('Error: UID Not Found!');
                 }
-                db.close();
             });
         });
     });

@@ -14,7 +14,6 @@ module.exports = function(app, dbconn) {
                     res.status(400);
                     res.send('Error: No message in database.');
                 }
-                db.close();
             });
         });
     });
