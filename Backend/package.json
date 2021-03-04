@@ -1,9 +1,9 @@
 {
   "name": "pmd-server",
-  "version": "0.2.6",
-  "description": "test server with sample data",
+  "version": "0.3.0",
+  "description": "Volunteer management event server",
   "engines": {
-    "node": "8.11.2"
+    "node": "14.x"
   },
   "main": "index.js",
   "scripts": {
@@ -15,22 +15,16 @@
     "chai": "^4.2.0",
     "chai-http": "^3.0.0",
     "chai-json-schema": "^1.5.1",
-    "commander": "^2.20.3",
-    "ejs": "2.5.6",
-    "eslint-config-google": "^0.9.1",
     "express": "^4.17.1",
-    "fast-csv": "^4.3.6",
+    "@fast-csv/parse": "^4.3.6",
     "firebase-admin": "^5.9.1",
     "mongodb": "^3.1.13",
     "multer": "^1.4.2",
-    "request-mocha": "^0.2.0",
     "twilio": "^3.48.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
     "mocha": "^4.1.0",
-    "request": "^2.88.2",
-    "tape": "^4.13.3"
+    "request": "^2.88.2"
   },
   "repository": {
     "type": "git",
