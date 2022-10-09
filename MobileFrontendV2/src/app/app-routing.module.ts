@@ -11,6 +11,22 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'check-in',
+    loadChildren: () => import('./check-in/check-in.module').then( m => m.CheckInPageModule)
+  },
+  {
+    path: 'check-out',
+    loadChildren: () => import('./check-out/check-out.module').then( m => m.CheckOutPageModule)
+  },
+  {
+    path: 'check-out-reminded',
+    loadChildren: () => import('./check-out-reminded/check-out-reminded.module').then( m => m.CheckOutRemindedPageModule)
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
+  },
 ];
 
 @NgModule({
