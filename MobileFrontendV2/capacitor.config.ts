@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'MobileFrontendV2',
+  appId: 'com.jumbocode.pmd',
+  appName: '"People Making A Difference"',
   webDir: 'www',
   bundledWebRuntime: false
 };
