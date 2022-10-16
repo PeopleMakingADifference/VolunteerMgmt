@@ -3,5 +3,8 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "DEV_MODE": true,
+  "PROD_SERVER": "http://pmd-server.herokuapp.com/",
+  "DEV_SERVER": "http://people-making-a-difference.herokuapp.com/"
 }

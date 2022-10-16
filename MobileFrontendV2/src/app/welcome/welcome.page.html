@@ -1,9 +1,35 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>welcome</ion-title>
-  </ion-toolbar>
+
+  <ion-navbar class="welcome">
+    <div class="big-icon">
+      <div>
+        <img src="assets/icon/pmd_transparent.png" class="pmd-icon-big" />
+      </div>
+      <div>
+        <h1 class="title-white">People Making a Difference</h1>
+    </div>
+    </div>
+  </ion-navbar>
+
 </ion-header>
+<ion-content padding>
+  <ion-grid class="welcome-grid">
+    <ion-row justify-content-center>
+      <p>Good Morning! Thank you for making a difference today.</p>
+    </ion-row>
+    <ion-row justify-content-center>
+      <button ion-button (click)="onGetStartedClick()">Let's Get Started</button>
 
-<ion-content>
-
+    </ion-row>
+  <!--   <ion-row justify-content-center>
+      <ion-item>
+        <ion-label>Debug: Skip 2FA</ion-label>
+        <ion-checkbox color="dark" checked="false" [(ngModel)]="debugSms"></ion-checkbox>
+      </ion-item>
+    </ion-row> -->
+    <ion-row justify-content-center>
+      <p>Questions? Call Lori at: </p>
+      <p><a href="tel:1-781-963-0373">+1 (781) 963 - 0373</a></p>
+    </ion-row>
+  </ion-grid>
 </ion-content>

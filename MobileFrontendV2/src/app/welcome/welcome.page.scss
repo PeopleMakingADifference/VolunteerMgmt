@@ -1,0 +1,25 @@
+page-welcome .big-icon {
+    display:  flex;
+    flex-direction: column;
+  }
+
+  page-welcome .big-icon > div {
+    text-align: center;
+  }
+
+  page-welcome .title-white {
+    color: white;
+    font-size: 2rem;
+  }
+
+  page-welcome .welcome-grid {
+    height: 100%;
+    justify-content: space-around;
+    font-size: 1.25em;
+  }
+
+  page-welcome .welcome-grid ion-row {
+    padding: 2em;
+    line-height: 1.5em;
+    text-align: center;
+  }
