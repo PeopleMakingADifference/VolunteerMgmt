@@ -127,10 +127,6 @@ export class HomePage implements OnInit {
     });
   }
 
-  onDoneClick() {
-    this.router.navigate(['/checkout-out']);
-  }
-
   onSaveUserClick() {
     this.userService.saveUser();
   }
@@ -143,7 +139,4 @@ export class HomePage implements OnInit {
     this.userService.deleteUser();
   }
 
-  onCheckoutReminded(){
-    this.router.navigate(['/check-out-reminded']);
-  }
 }
