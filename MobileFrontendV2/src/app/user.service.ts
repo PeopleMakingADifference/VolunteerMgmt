@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Storage} from '@ionic/storage';
-import {Platform} from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
+import { Platform } from '@ionic/angular';
 
 // this weird thing comes from a cordova plugin - don't worry about it
 declare let SMS: any;

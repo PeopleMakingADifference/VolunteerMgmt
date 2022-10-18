@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Storage} from '@ionic/storage';
-import {User} from './user.service';
+import { Storage } from '@ionic/storage-angular';
+import { User } from './user.service';
 //import {FCM} from '@ionic-native/fcm';
-import {Platform} from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 // allows the app to receive push notifications

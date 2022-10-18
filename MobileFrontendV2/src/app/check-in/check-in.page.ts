@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { SafariViewController } from '@ionic-native/safari-view-controller';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 import { ConfigService } from '../../app/config.service';
 import { User, UserService } from '../../app/user.service';
@@ -23,10 +23,11 @@ export class CheckInPage implements OnInit {
       public configService: ConfigService,
       public userService: UserService,
       public loadingCtrl: LoadingController,
-      public androidPermissions: typeof AndroidPermissions,
+      public androidPermissions: AndroidPermissions,
       public platform: Platform,
-      private iab: typeof InAppBrowser,
-      private svc: typeof SafariViewController) {}
+      private iab: InAppBrowser,
+      private svc: SafariViewController
+      ) {}
 
    ngOnInit(): void {
     this.platform.ready().then(() => {
@@ -123,7 +124,7 @@ export class CheckInPage implements OnInit {
         response.dismiss().then(() => {
           if (loginValid === true) {
             // navigate to the main page
-            this.router.navigate(['/check-in-2']);
+            this.router.navigate(['/check-in-two']);
           }
         });
       });

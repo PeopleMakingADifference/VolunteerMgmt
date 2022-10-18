@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import {Platform} from '@ionic/angular';
-import {UserService} from './user.service';
-import {SplashScreen} from '@ionic-native/splash-screen';
-
-import {WelcomePage} from './welcome/welcome.page';
-import {HomePage} from './home/home.page';
+import { Platform } from '@ionic/angular';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
+import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +15,14 @@ export class AppComponent {
   constructor(
       platform: Platform,
       userService: UserService,
-      splashScreen: typeof SplashScreen
+      router: Router,
+      splashScreen: SplashScreen
   ) {
+    splashScreen.show();
     userService.loadUser()
-    .then(loadedUser => {
-      this.rootPage = (loadedUser) ? HomePage : WelcomePage;
+    .then((loadedUser) => {
+      this.rootPage = (loadedUser) ? '/home' : '/welcome';
+      router.navigate([this.rootPage]);
     });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
