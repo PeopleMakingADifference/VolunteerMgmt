@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'welcome',
     loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
   },
+  {
+    path: 'check-in-two',
+    loadChildren: () => import('./check-in-two/check-in-two.module').then( m => m.CheckInTwoPageModule)
+  },
 ];
 
 @NgModule({
