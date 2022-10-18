@@ -16,9 +16,7 @@
 #container p {
   font-size: 16px;
   line-height: 22px;
-
   color: #8c8c8c;
-
   margin: 0;
 }
 
@@ -26,11 +24,15 @@
   text-decoration: none;
 }
 
-page-main .main-grid {
+.main-grid {
   padding: 0;
-  height: 100%;
   justify-content: space-around;
+  background-color: #f5f4f4;
   font-size: 1.25em;
+}
+
+.main-grid a {
+  color: #747474
 }
 
 #assignment-box {

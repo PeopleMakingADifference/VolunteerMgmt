@@ -1,25 +1,30 @@
-page-welcome .big-icon {
-    display:  flex;
-    flex-direction: column;
-  }
+.big-icon {
+  display:  flex;
+  flex-direction: column;
+}
 
-  page-welcome .big-icon > div {
-    text-align: center;
-  }
+.big-icon > div {
+  text-align: center;
+}
 
-  page-welcome .title-white {
-    color: white;
-    font-size: 2rem;
-  }
+.title-white {
+  color: white;
+  font-size: 2rem;
+}
 
-  page-welcome .welcome-grid {
-    height: 100%;
-    justify-content: space-around;
-    font-size: 1.25em;
-  }
+.welcome-grid {
+  padding: 0;
+  justify-content: space-around;
+  background-color: #f5f4f4;
+  font-size: 1.25em;
+}
 
-  page-welcome .welcome-grid ion-row {
-    padding: 2em;
-    line-height: 1.5em;
-    text-align: center;
-  }
+.welcome-grid ion-row {
+  padding: 2em;
+  line-height: 1.5em;
+  text-align: center;
+}
+
+.welcome-grid a {
+  color: #747474;
+}
