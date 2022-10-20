@@ -41,16 +41,20 @@ module.exports = {
           }
         ).toArray((err, items) => {
           if (items.length === 1) {
-            const token = items[0].volunteers[0].token;
-            admin.messaging().sendToDevice(token, payload)
-            .then((response) => {
-              resolve(response);
-              return;
-            })
-            .catch((err) => {
-              reject(err);
-              return;
-            });
+            for (let v of items[0].volunteers) {
+              if (v.id === uid) {
+                const token = v.token;
+                admin.messaging().sendToDevice(token, payload)
+                .then((response) => {
+                  resolve(response);
+                  return;
+                })
+                .catch((err) => {
+                  reject(err);
+                  return;
+                });
+              }
+            }
           }
         });
       });

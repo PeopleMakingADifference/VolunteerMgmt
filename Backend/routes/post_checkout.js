@@ -31,26 +31,33 @@ module.exports = function(app, dbconn) {
                     if (items[0].isClosed===true) {
                         res.status(400);
                         res.send({'Error': 'This event has been closed.'});
-                    } else if (!items[0].volunteers[0].checkout) {
-                        db.collection('bowls').updateOne(
-                            {
-                                'volunteers.id': parseInt(req.body.uid),
-                                'exit_id': req.body.exitId.toUpperCase(),
-                            },
-                            {
-                                $set: {
-                                    'volunteers.$.checkout': Date.now(),
-                                },
-                            });
-                            res.send('Successfully Checked Out');
+                        return;
                     } else {
-                        res.status(400);
-                        res.send('Error: You have already checked out!');
+                        for (let v of items[0].volunteers) {
+                            if (v.id === parseInt(req.body.uid)) {
+                                if (!v.checkout) {
+                                    db.collection('bowls').updateOne(
+                                    {
+                                        'volunteers.id': parseInt(req.body.uid),
+                                        'exit_id': req.body.exitId.toUpperCase(),
+                                    },
+                                    {
+                                        $set: {
+                                            'volunteers.$.checkout': Date.now(),
+                                        },
+                                    });
+                                    res.send('Successfully Checked Out');
+                                } else {
+                                    res.status(400);
+                                    res.send('Error: You have already checked out!');
+                                }
+                                return;
+                            }
+                        }
                     }
-                } else {
-                    res.status(400);
-                    res.send('Error: Incorrect UID or exit code.');
                 }
+                res.status(400);
+                res.send('Error: Incorrect UID or exit code.');
             });
         });
     });
