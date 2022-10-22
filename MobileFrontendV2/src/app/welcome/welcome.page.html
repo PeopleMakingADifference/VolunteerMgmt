@@ -1,25 +1,22 @@
 <ion-header>
-
-  <ion-toolbar class="welcome">
-    <div class="big-icon">
+  <ion-toolbar>
+    <div class="pmd-toolbar">
       <div>
-        <img src="assets/icon/pmd_transparent.png" class="pmd-icon-big" />
-      </div>
-      <div>
-        <h1 class="title-white">People Making a Difference</h1>
+        <h1 class="title-white">PEOPLE MAKING A DIFFERENCE®</h1>
     </div>
     </div>
   </ion-toolbar>
-
 </ion-header>
-<ion-content padding>
+
+<ion-content>
   <ion-grid class="welcome-grid">
     <ion-row justify-content-center>
       <p>Good Morning! Thank you for making a difference today.</p>
     </ion-row>
-    <ion-row justify-content-center>
+    <ion-row>
+    <ion-col justify-content-center>
       <ion-button (click)="onGetStartedClick()">Let's Get Started</ion-button>
-
+    </ion-col>
     </ion-row>
   <!--   <ion-row justify-content-center>
       <ion-item>
@@ -27,9 +24,11 @@
         <ion-checkbox color="dark" checked="false" [(ngModel)]="debugSms"></ion-checkbox>
       </ion-item>
     </ion-row> -->
-    <ion-row justify-content-center>
-      <p>Questions? Call Lori at: </p>
-      <p><a href="tel:1-781-963-0373">+1 (781) 963 - 0373</a></p>
+    <ion-row>
+      <ion-col justify-content-center>
+        <p>Questions? Call Lori at: </p>
+        <p><a href="tel:1-781-963-0373">+1 (781) 963 - 0373</a></p>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

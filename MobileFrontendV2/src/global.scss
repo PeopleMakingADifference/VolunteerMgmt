@@ -24,3 +24,154 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+#container {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#container strong {
+    font-size: 20px;
+    line-height: 26px;
+}
+
+#container p {
+    font-size: 16px;
+    line-height: 22px;
+    color: #8c8c8c;
+    margin: 0;
+}
+
+#container a {
+    text-decoration: none;
+}
+
+.main-grid {
+    padding: 0;
+    justify-content: space-around;
+    font-size: 1em;
+}
+
+.main-grid ion-row {
+    text-align: center;
+}
+
+.main-grid a {
+    color: #747474
+}
+
+.pmd-toolbar {
+    display:  flex;
+    flex-direction: column;
+}
+
+.pmd-toolbar > div {
+    text-align: center;
+}
+
+.title-white {
+    color: white;
+    font-size: 2rem;
+}
+
+.toolbar .toolbar-background-md,
+.toolbar .toolbar-background-ios {
+  background: linear-gradient(to bottom, #008776 0%, #00baac 100%);
+}
+
+.toolbar.pageinfo .toolbar-background-md,
+.toolbar.pageinfo .toolbar-background-ios {
+  background: #74bdb4;
+}
+
+.pmd-icon {
+  max-height: 2em;
+  max-width: 3em;
+}
+
+.title .toolbar-title {
+  align-items: center;
+  color: #ffffff;
+  display: flex;
+  font-size: 1.5rem;
+  overflow: visible;
+}
+
+.header .toolbar {
+  height: 4em;
+}
+
+.header .welcome {
+  height: 12em;
+}
+
+.header .toolbar {
+  height: 4em;
+}
+
+.header .welcome {
+  height: 12em;
+}
+
+.title-icon,
+.title-text {
+  flex: 1 1 auto;
+}
+.pmd-icon {
+  max-height: 2em;
+  max-width: 3em;
+}
+
+.ion-title-icon {
+  margin: 0 0.25rem;
+}
+
+.ion-button {
+  border-radius: 24px;
+  border: thin solid #b4b4b4;
+}
+
+.ion-button .ion-button-inner::after {
+  content: ">";
+  padding-left: 1em;
+}
+
+.ion-content-md,
+.ion-button-md {
+  color: #74bdb4;;
+}
+
+.ion-second-title .ion-toolbar-title {
+  justify-content: center;
+}
+
+.ion-alternate-content {
+  background: #ffffff;
+  border: 1px solid #b4b4b4;
+}
+
+.ion-label .labelltext {
+  color: #747474;
+  text-align: center;
+}
+
+.ion-item.item-block .ion-item-inner {
+  border-bottom: 1px solid #cecece;
+}
+
+.ion-item .ion-input-wrapper {
+  overflow: visible;
+}
+
+.ion-spinner-crescent circle {
+  stroke: #000000;
+}
+
+.welcome-grid a, .ion-content a {
+  color: #4a4a4a;
+}

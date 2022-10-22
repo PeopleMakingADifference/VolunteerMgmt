@@ -1,41 +1,46 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      <div class="title-icon">
-        <img src="assets/icon/pmd_transparent.png" class="pmd-icon" />
+    <div class="pmd-toolbar">
+      <div>
+        <h1 class="title-white">PEOPLE MAKING A DIFFERENCE®</h1>
       </div>
-      <div class="title-text">
-        People Making a Difference
+    </div>
+  </ion-toolbar>
+  <ion-toolbar>
+    <div class="pmd-toolbar">
+      <div>
+        <h1 class="second-title">Check In</h1>
       </div>
-    </ion-title>
+    </div>
   </ion-toolbar>
-  <ion-toolbar class="pageinfo">
-    <ion-title class="second-title">
-      Check In
-    </ion-title>
-  </ion-toolbar>
-
 </ion-header>
+
 <ion-content padding text-center>
-  <ion-item>
-    <ion-label stacked class="labeltext">Please enter the event ID #:</ion-label>
-    <ion-input
-      type="text"
-      [(ngModel)]="eventId"
-    >
-    </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked class="labeltext">Please enter your mobile number below:</ion-label>
-    <ion-input
-      type="tel"
-      [(ngModel)]="phoneNum"
-    >
-    </ion-input>
-  </ion-item>
-  <p>{{errorMessage}}</p>
-  <ion-button (click)="onSubmitClick()">Confirm</ion-button>
+ <ion-grid class="main-grid">
+  <ion-row justify-content-center>
+    <ion-item>
+      <ion-label stacked class="labeltext"><small>Please enter the event ID #:</small></ion-label>
+      <ion-input type="text" [(ngModel)]="eventId"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-item>
+      <ion-label stacked class="labeltext"><small>Please enter your mobile #:</small></ion-label>
+      <ion-input type="tel" [(ngModel)]="phoneNum"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-col justify-content-center>
+      <ion-text color="danger">{{errorMessage}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col justify-content-center>
+      <ion-button (click)="onSubmitClick()">Confirm</ion-button>
+    </ion-col>
+  </ion-row>
   <!---  Remove the Signup button - will add ability to add volunteer to the db via the Desktop UI
   <ion-button (click)="onSignupClick()">Sign Up</ion-button>
   -->
+ </ion-grid>
 </ion-content>

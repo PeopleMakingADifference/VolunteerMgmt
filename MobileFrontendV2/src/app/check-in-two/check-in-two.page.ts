@@ -25,7 +25,7 @@ export class CheckInTwoPage implements OnInit {
 
   ngOnInit(): void {
     this.platform.ready().then(()=>{
-      if(!this.userService.getDebug() && this.platform.is('android')){
+      if(/*!this.userService.getDebug()*/ false && this.platform.is('android')){
         const loader = this.loadingCtrl.create({
           message: 'Waiting for text message...'
         }).then((response) => {

@@ -75,6 +75,7 @@ export class CheckInPage implements OnInit {
       const formBody: string = this.configService.xwwwurlencode(loginForm);
       // make the HTTPRequest
       // see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+      console.log('Fetching: {}update_checkin', apiEndpoint);
       fetch(`${apiEndpoint}update_checkin`, {
         method: 'POST',
         headers: {

@@ -21,7 +21,7 @@ export class WelcomePage implements OnInit {
   }
 
   onGetStartedClick() {
-    this.userService.setDebug(this.debugSms);
+    //this.userService.setDebug(this.debugSms);
     // navigate to the id page
     this.router.navigate(['/check-in']);
   }

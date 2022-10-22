@@ -54,7 +54,7 @@ export class HomePage implements OnInit {
 
       this.platform.ready().then(() => {
         // check to make sure this platform has the push notifications plugin
-        if(this.platform.is('capacitor')){
+        //if(this.platform.is('capacitor')){
           this.pushService.register(
           this.userService.getUser(),
           this.configService.getEndpointUrl()
@@ -62,7 +62,7 @@ export class HomePage implements OnInit {
         .then((rsp) => {
           console.log('push response', rsp);
         });
-        }
+        //}
       });
     }));
   };

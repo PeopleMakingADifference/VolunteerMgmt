@@ -67,14 +67,10 @@
 	--ion-color-light-shade: #d7d6d6;
 	--ion-color-light-tint: #f5f4f4;
 
-  /*
-  --ion-toolbar-background: linear-gradient(#008776, white,#00baac);
-    --ion-item-background: #f4f3f3;
-  */
-  --ion-toolbar-background: #74bdb4;
-  --ion-item-background: #f4f3f3;
+  --ion-toolbar-background: linear-gradient(rgb(55,131,125),rgb(215,228,228));
+  --ion-item-background: #ffffff;
+  --ion-background-color: #ffffff;
   --ion-border-color: #b4b4b4;
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -199,11 +195,11 @@
    */
 
   .md body {
-    --ion-background-color: #74bdb4;
-    --ion-background-color-rgb: 74,bd,b4;
+    --ion-background-color: #000000;
+    --ion-background-color-rgb: 00,00,00;
 
-    --ion-text-color: #747474;
-    --ion-text-color-rgb: 74,74,74;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255,255,255;
     --ion-border-color: #b4b4b4;
 
     --ion-color-step-50: #1e1e1e;
@@ -234,4 +230,20 @@
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+// Button in PMD shades of green
+ion-button {
+  --background: rgb(54,131,123);
+  --background-hover: rgb(197,235,215);
+  --background-activated: rgb(197,235,215);
+  --background-focused: rgb(197,235,215);
+  --color: white;
+  --border-radius: 0;
+  --border-color: rgb(54,131,123);
+  --border-style: solid;
+  --border-width: 2px;
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+  --padding-top: 10px;
+  --padding-bottom: 10px;
 }
