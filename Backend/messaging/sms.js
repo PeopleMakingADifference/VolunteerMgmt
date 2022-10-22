@@ -8,7 +8,7 @@ module.exports = function(dbconn, phone_num, uid, debug_mode){
             db.collection('bowls').updateOne({'volunteers.id': parseInt(uid)},
             {
                 $set: {
-                    'volunteers.$.verif_code': '1234'
+                    'volunteers.$.verif_code': '123456'
                 },
             })
         });
@@ -17,9 +17,9 @@ module.exports = function(dbconn, phone_num, uid, debug_mode){
             accountSid: process.env.TWILIO_ACC_ID,
             authToken: process.env.TWILIO_AUTH_TOKEN
         };
-        // generate a string of 5 random numbers e.g. 01017
+        // generate a string of 6 random numbers e.g. 301017
         let verif_num = "";
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             verif_num += parseInt(Math.random() * 10) + "";
         }
 
