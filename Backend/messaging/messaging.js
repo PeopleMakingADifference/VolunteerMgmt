@@ -15,10 +15,7 @@ const firebaseCreds = process.env.MONGODB_ATLAS_URI ? {
 if (process.env.TRAVIS_MODE === 'True') {
   // const serviceAccount = "nothing, there's no API KEY";
 } else {
-  admin.initializeApp({
-    credential: admin.credential.cert(firebaseCreds),
-    databaseURL: 'https://people-making-a-difference.firebaseio.com',
-  });
+  admin.initializeApp(firebaseCreds);
 }
 
 module.exports = {
