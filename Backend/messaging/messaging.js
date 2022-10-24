@@ -1,21 +1,13 @@
-const admin = require('firebase-admin');
-const firebaseCreds = process.env.MONGODB_ATLAS_URI ? {
-  type: 'service_account',
-  project_id: 'people-making-a-difference',
-  auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-  token_uri: 'https://accounts.google.com/o/oauth2/token',
-  auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-  private_key: JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
-  client_email: process.env.FIREBASE_CLIENT_EMAIL,
-  client_id: process.env.FIREBASE_CLIENT_ID,
-  client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-} : process.env.TRAVIS_MODE ? {} : require('./demo-key.json');
+const { applicationDefault, initializeApp } = require('firebase-admin/app');
+const { getMessaging } = require('firebase-admin/messaging');
 
 if (process.env.TRAVIS_MODE === 'True') {
   // const serviceAccount = "nothing, there's no API KEY";
 } else {
-  admin.initializeApp(firebaseCreds);
+  initializeApp({
+    credential: applicationDefault(),
+    databaseURL: "https://people-making-a-difference.firebaseio.com"
+  });
 }
 
 module.exports = {
@@ -40,8 +32,9 @@ module.exports = {
           if (items.length === 1) {
             for (let v of items[0].volunteers) {
               if (v.id === uid) {
-                const token = v.token;
-                admin.messaging().sendToDevice(token, payload)
+                let message = payload;
+                message.token = v.token;
+                getMessaging().send(message)
                 .then((response) => {
                   resolve(response);
                   return;
@@ -79,9 +72,10 @@ module.exports = {
             };
             let pushPromises = [];
             for (let volunteer of items[0].volunteers) {
-              const token = volunteer.token;
+              let message = payload;
+              message.token = volunteer.token;
               if (token && filter(volunteer)) {
-                pushPromises.push(admin.messaging().sendToDevice(token, payload));
+                pushPromises.push(getMessaging().send(message));
               }
             }
             // await all the push notification attempts

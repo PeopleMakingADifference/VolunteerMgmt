@@ -5,9 +5,7 @@ module.exports = function(app, dbconn) {
       const payload = {
         notification: {
           title: 'PMD: Did You Forget?',
-          body: 'We have not received your check-out time. No problem - just tap here to set it!',
-          icon: 'fcm_push_icon',
-          click_action: 'FCM_PLUGIN_ACTIVITY',
+          body: 'We have not received your check-out time. No problem - just tap here to set it!'
         },
         data: {
           intent: 'checkout_reminder',
