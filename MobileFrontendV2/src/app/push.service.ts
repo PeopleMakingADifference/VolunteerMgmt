@@ -28,8 +28,8 @@ export class PushService {
         // Show us the notification payload if the app is open on our device
         PushNotifications.addListener('pushNotificationReceived',
           (notification: PushNotificationSchema) => {
+          console.log('Push received: ' + JSON.stringify(notification));
           if (notification.data.intent && notification.data.intent === 'checkout_reminder'){
-            console.log('Push received: ' + JSON.stringify(notification));
             this.router.navigate(['/check-out-reminded']);
           }
         });
