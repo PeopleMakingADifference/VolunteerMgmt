@@ -74,7 +74,7 @@ module.exports = {
             for (let volunteer of items[0].volunteers) {
               let message = payload;
               message.token = volunteer.token;
-              if (token && filter(volunteer)) {
+              if (message.token && filter(volunteer)) {
                 pushPromises.push(getMessaging().send(message));
               }
             }

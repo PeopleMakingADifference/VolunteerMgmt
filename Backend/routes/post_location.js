@@ -15,8 +15,8 @@ module.exports = function(app, dbconn) {
                     );
                     const payload = {
                         notification: {
-                            title: 'PMD: ${items[0].name}',
-                            body: 'Location update: ${req.body.location}'
+                            title: 'PMD: ' + items[0].name,
+                            body: 'Location update: ' + req.body.location
                         },
                     };
                     messaging.messageOne(dbconn, parseInt(req.body.uid), payload)

@@ -29,19 +29,17 @@ module.exports = function(app, dbconn) {
                 }).toArray((err, items)=>{
                     const payload = {
                         notification: {
-                            title: 'PMD: ${items[0].name}',
-                            body: 'New message: ${msg}'
+                            title: 'PMD: ' + items[0].name,
+                            body: 'New message: ' + msg
                         },
                     };
 
                     // Send to one or all?
                     if (sendOne) {
                         let uid = 0;
-                        console.log("Finding volunteer: {}", req.body.toWho);
                         for (let item of items[0].volunteers) {
                             if (item['name'] === req.body.toWho) {
                                 uid = item['id'];
-                                console.log("Got user ID: {}", uid);
                                 break;
                             }
                         }
