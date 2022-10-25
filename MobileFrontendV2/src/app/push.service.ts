@@ -19,7 +19,6 @@ import {
 export class PushService {
   constructor(
     public storage: Storage,
-    //public fcm: FCM,
     public platform: Platform,
     public router: Router
   ){

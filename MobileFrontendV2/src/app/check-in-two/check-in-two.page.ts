@@ -24,27 +24,6 @@ export class CheckInTwoPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.platform.ready().then(()=>{
-      if(/*!this.userService.getDebug()*/ false && this.platform.is('android')){
-        const loader = this.loadingCtrl.create({
-          message: 'Waiting for text message...'
-        }).then((response) => {
-        response.present();
-        const interval = setInterval(() => {
-          console.log('checking...')
-          if(this.userService.getUser().hasCode()){
-            console.log(`code: ${this.userService.getUser().getCode()}`);
-            this.verifyCode(this.userService.getUser().getCode())
-            .then(verified => {
-              response.dismiss();
-              this.userService.saveUser();
-              this.router.navigate(['/home']);
-              clearInterval(interval);
-            });
-          }
-        }, 500);
-      });
-    }});
   }
 
   onSubmitClick(): void {

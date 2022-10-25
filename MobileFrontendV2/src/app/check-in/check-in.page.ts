@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
-import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 import { ConfigService } from '../../app/config.service';
 import { User, UserService } from '../../app/user.service';
@@ -23,26 +20,10 @@ export class CheckInPage implements OnInit {
       public configService: ConfigService,
       public userService: UserService,
       public loadingCtrl: LoadingController,
-      public androidPermissions: AndroidPermissions,
-      public platform: Platform,
-      private iab: InAppBrowser,
-      private svc: SafariViewController
+      public platform: Platform
       ) {}
 
    ngOnInit(): void {
-    this.platform.ready().then(() => {
-      if (this.platform.is('android')) {
-        this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_SMS)
-        .then(
-          success => {
-            console.log('Sms read permission granted');
-            this.userService.watchForVerificationText();
-          },
-          err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_SMS)
-        );
-        this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_SMS]);
-      }
-    });
   }
 
   isDebugUser(phone: number): boolean {
@@ -132,17 +113,4 @@ export class CheckInPage implements OnInit {
     });
   }
 
-  onSignupClick() {
-    this.svc.isAvailable()
-      .then((available: boolean) => {
-        if (available) {
-          this.svc.show({
-            url: 'https://www.pmd.org/events.phtml'
-          });
-        } else {
-          this.iab.create('https://www.pmd.org/events.phtml', '_system', 'location=yes');
-        }
-      }
-    );
-  }
 }
