@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
 import { UserService } from '../../app/user.service';
 import { Router } from '@angular/router';
 
@@ -9,20 +8,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./welcome.page.scss'],
 })
 export class WelcomePage implements OnInit {
-  notAndroid = true;
   debugSms = true;
 
-  constructor( public userService: UserService, public platform: Platform, public router: Router ) {}
+  constructor( public userService: UserService, public router: Router ) {}
 
   ngOnInit(): void {
-    this.platform.ready().then(() => {
-      this.notAndroid = !this.platform.is('android');
-    });
   }
 
   onGetStartedClick() {
+    // Uncomment to debug with fixed SMS code of 123456
     //this.userService.setDebug(this.debugSms);
-    // navigate to the id page
+    // navigate to the check in page
     this.router.navigate(['/check-in']);
   }
 

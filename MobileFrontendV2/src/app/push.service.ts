@@ -23,16 +23,14 @@ export class PushService {
     public router: Router
   ){
     this.platform.ready().then(()=>{
-      if(this.platform.is('android')){
-        // Show us the notification payload if the app is open on our device
-        PushNotifications.addListener('pushNotificationReceived',
-          (notification: PushNotificationSchema) => {
-          console.log('Push received: ' + JSON.stringify(notification));
-          if (notification.data.intent && notification.data.intent === 'checkout_reminder'){
-            this.router.navigate(['/check-out-reminded']);
-          }
-        });
-      }
+      // Show us the notification payload if the app is open on our device
+      PushNotifications.addListener('pushNotificationReceived',
+        (notification: PushNotificationSchema) => {
+        console.log('Push received: ' + JSON.stringify(notification));
+        if (notification.data.intent && notification.data.intent === 'checkout_reminder'){
+          this.router.navigate(['/check-out-reminded']);
+        }
+      });
     });
   }
 
