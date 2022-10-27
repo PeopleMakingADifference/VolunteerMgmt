@@ -1,0 +1,10 @@
+{
+  "name": "MobileFrontendV2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "DEV_MODE": true,
+  "PROD_SERVER": "https://people-making-a-difference.herokuapp.com/",
+  "DEV_SERVER": "https://people-making-a-difference.herokuapp.com/"
+}

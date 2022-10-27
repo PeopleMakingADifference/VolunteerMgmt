@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="pmd-toolbar">
+      <div>
+        <h1 class="title-white">PEOPLE MAKING A DIFFERENCE®</h1>
+      </div>
+    </div>
+  </ion-toolbar>
+  <ion-toolbar>
+    <div class="pmd-toolbar">
+      <div>
+        <h1 class="second-title">Check In</h1>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding text-center>
+ <ion-grid class="main-grid">
+  <ion-row>
+    <ion-item>
+      <ion-label position="stacked">Please enter the event ID #:</ion-label>
+      <ion-input type="text" [(ngModel)]="eventId"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-item>
+      <ion-label position="stacked">Please enter your mobile number:</ion-label>
+      <ion-input type="tel" [(ngModel)]="phoneNum"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-col justify-content-center>
+      <ion-text color="danger">{{errorMessage}}</ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col justify-content-center>
+      <ion-button (click)="onSubmitClick()">Confirm</ion-button>
+    </ion-col>
+  </ion-row>
+ </ion-grid>
+</ion-content>

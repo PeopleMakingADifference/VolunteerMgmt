@@ -42,13 +42,25 @@ module.exports = function(app, dbconn){
       const parser = new csv(filepath);
 
       // feed it the file and get the rows back
-      parser.parse().then(parseResult => {
-        const {rows, feedback} = parseResult;
+      parser.parse()
+        .then(parseResult => {
+          const {rows, feedback} = parseResult;
 
-        // have the parser handle the database updating
-        parser.insert(dbconn, String(req.body.eventName), rows);
-        res.send(feedback.join('<br />'));
-      })
+          // have the parser handle the database updating
+          if (rows) {
+            parser.insert(dbconn, String(req.body.eventName), rows);
+          }
+
+          // Removed "Skiped" error as it's just a warning
+          if (feedback && !String(feedback).includes('Skipped:')) {
+            res.send(feedback.join('<br />'));
+          } else {
+            res.send('Successfully added event');
+          }
+        })
+        .catch(err => {
+          console.error('parse error', err);
+        });
     } else {
       res.status(400).send('It appears that you uploaded something that is not a CSV file. Please try again.');
     }

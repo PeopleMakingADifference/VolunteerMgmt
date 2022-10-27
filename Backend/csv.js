@@ -1,4 +1,4 @@
-const fast_csv = require('fast-csv'),
+const csv = require('@fast-csv/parse'),
   fs = require('fs'),
   mongodb = require('mongodb');
 
@@ -15,24 +15,25 @@ class CSV_parser {
       try {
         fs.createReadStream(this.path)
           .pipe(
-            fast_csv({
+            csv.parse({
               // This may look strange, but it has a purpose. 
               // There are ~89 columns in the CSV, and we only care about a few of them.
               // So, this is a sparse array containing the ones we want, and empty space
               // for every one we don't want.
-              headers: [
-                , , , , , ,
-                "FirstName",
-                "LastName", , , , , , , , , , , ,
-                "Email",
-                "CellPhone", , , , , , , , , , , , ,
-                "ROLE",
-                "BACKUP ROLE", , , , , , , , , ,
-                'Room', , , , , , , , , ,
-                "TRAINING DATE(s)", , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
-              ],
+              // headers: [
+              //   , , , , , ,
+              //   "FirstName",
+              //   "LastName", , , , , , , , , , , ,
+              //   "Email",
+              //   "CellPhone", , , , , , , , , , , , ,
+              //   "ROLE",
+              //   "BACKUP ROLE", , , , , , , , , ,
+              //   'Room', , , , , , , , , ,
+              //   "TRAINING DATE(s)", , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
+              // ],
               // Replace the first line of the CSV file (the header line) with our sparse array.
-              renameHeaders: true
+              // renameHeaders: true
+              headers: true
             })
             .on('data', (row) => {
               let newRow = {
@@ -42,7 +43,9 @@ class CSV_parser {
                 assignment: row['ROLE'],
                 location: row['Room']
               };
-              if(newRow.name && newRow.email && newRow.phone && newRow.assignment && newRow.location){
+
+              // We just need the name and phone for app functionality
+              if(newRow.name && (newRow.name != "") && newRow.phone && (newRow.phone != "")){
                 rows.push(newRow);
               } else {
                 const rowRepresentation = [
@@ -52,6 +55,10 @@ class CSV_parser {
                 feedback.push(`Skipped:    ${rowRepresentation}<br />This row was missing either FirstName, LastName, Email, CellPhone, ROLE, or Room data.`);
               }
               
+            })
+            .on('error', (row, rowNumber) => {
+              feedback.push('Invalid data file!');
+              res({rows: null, feedback: feedback});
             })
             .on('end', () => {
               if (feedback.length === 0){
@@ -66,7 +73,7 @@ class CSV_parser {
     });
   }
   
-  async insert(dbconn, event_name, data){
+  async insert(dbconn, event_name, data) {
     let db = await dbconn();   
     // start by finding the bowl which has the volunteer with the highest ID
     let err, bowls = await db.collection('bowls').find().sort({'volunteers.id': -1}).limit(1).toArray();
@@ -94,7 +101,7 @@ class CSV_parser {
 
     // if it does not, create it and populate it with data
     if(event_query_bowls.length === 0){
-      let event_insert_err, event_insert_bowls = await db.collection('bowls').insert({
+      let event_insert_err, event_insert_bowls = await db.collection('bowls').insertOne({
         'name': event_name,
         'message': 'Thank you for volunteering!',
         'id': this.generate_event_id(5),
@@ -108,7 +115,7 @@ class CSV_parser {
     for (let row=0; row<data.length; row++) {
       // Start by attempting an update
       // we can't do an upsert here because the volunteer data is inside an array
-      let volunteer_update_err, volunteer_update_result = await db.collection('bowls').update({
+      let volunteer_update_err, volunteer_update_result = await db.collection('bowls').updateOne({
         'name': event_name,
         'volunteers.phone': String(data[row]['phone'])
       }, {
@@ -120,7 +127,7 @@ class CSV_parser {
       // if we didn't just update an existing row, we must be inserting a new row...
       if(volunteer_update_result.result.nModified === 0){
         // insert it by pushing the new row onto the volunteers array
-        let volunteer_push_err, volunteer_push_result = await db.collection('bowls').update({
+        let volunteer_push_err, volunteer_push_result = await db.collection('bowls').updateOne({
           'name': event_name
         }, {
           $push: {
@@ -129,12 +136,11 @@ class CSV_parser {
         });
       }
     } 
-    db.close(); 
   }
 
   generate_event_id(length){
-    // allowed characters: A-Z, 0-9
-    const spaces = [ [48, 57], [65, 90] ];
+    // allowed characters: A-Z, 2-9 (no I,O or 0,1)
+    const spaces = [ [50, 57], [65, 72], [74, 78], [80, 90] ];
     let str = "";
     for (let i=0; i<length; i++){
       // pick letter or number, then pick a character and append it

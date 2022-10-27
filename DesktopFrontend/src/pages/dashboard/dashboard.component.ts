@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import 'rxjs/add/operator/map';
+import * as moment from 'moment';
 
 @Component({
   selector: 'dashboard',
@@ -62,7 +63,41 @@ export class DashboardComponent implements OnInit {
       this.showError(`update location for ${volunteer.name}`));
   }
 
-  postMessage(bowl: any) {
+  postCheckin(volunteer: any) {
+    this.errorMessage = '';
+    let value = moment(volunteer.new_checkin, 'MM/DD/YY, hh:mm A').valueOf();
+    this.http.post('/update_admin_checkin',
+      {
+        uid : volunteer.id,
+        checkin : value
+      }
+    )
+    .subscribe(
+      ()=>{
+        volunteer.checkin = value;
+        console.log('updated checkin time')
+      },
+      this.showError(`update checkin for ${volunteer.name}`));
+  }
+
+  postCheckout(volunteer: any) {
+    this.errorMessage = '';
+    let value = moment(volunteer.new_checkout, 'MM/DD/YY, hh:mm A').valueOf();
+    this.http.post('/update_admin_checkout',
+      {
+        uid : volunteer.id,
+        checkout : value
+      }
+    )
+    .subscribe(
+      ()=>{
+        volunteer.checkout = value;
+        console.log('updated checkout time')
+      },
+      this.showError(`update checkout for ${volunteer.name}`));
+  }
+
+  postVolunteerMessage(bowl: any, user: any) {
     if(!bowl.new_message || bowl.new_message === bowl.message){
       console.log("nope");
       return;
@@ -71,11 +106,15 @@ export class DashboardComponent implements OnInit {
     this.http.post('/update_message',
       {
         eventId: bowl.id,
-        message : bowl.new_message
+        message : bowl.new_message,
+        toWho : user
       }
     )
     .subscribe((res) => {
-      bowl.message = bowl.new_message;
+      // Update bowl message if sent to all users
+      if (user === 'All Volunteers') {
+        bowl.message = bowl.new_message;
+      }
       console.log('updated message');
     }, this.showError(`update message for ${bowl.name}`));
 
@@ -97,6 +136,14 @@ export class DashboardComponent implements OnInit {
 
     if(volunteer.new_assignment !== volunteer.assignment && volunteer.new_assignment) {
       this.postAssignment(volunteer);
+    }
+
+    if(volunteer.new_checkin !== volunteer.checkin && volunteer.new_checkin) {
+      this.postCheckin(volunteer);
+    }
+
+    if(volunteer.new_checkout !== volunteer.checkout && volunteer.new_checkout) {
+      this.postCheckout(volunteer);
     }
 
     volunteer.edit = false;
@@ -145,4 +192,62 @@ export class DashboardComponent implements OnInit {
     bowl.deleting = false;
   }
 
+  closeBowl(bowl){
+    bowl.closing = true;
+  }
+
+  confirmClose(bowl){
+    this.errorMessage = '';
+    this.http.post('/update_is_closed',
+      {
+        eventId: bowl.id,
+        isClosed: true
+      }
+    )
+    .subscribe((res) => {
+      bowl.isClosed = true;
+      bowl.closing = false;
+      console.log('updated isClosed');
+    }, this.showError(`update isClosed for ${bowl.name}`));
+  }
+
+  cancelClose(bowl){
+    console.log("cancel close");
+    bowl.closing = false;
+  }
+
+  reopenBowl(bowl){
+    this.errorMessage = '';
+    this.http.post('/update_is_closed',
+      {
+        eventId: bowl.id,
+        isClosed: false
+      }
+    )
+    .subscribe((res) => {
+      bowl.isClosed = false;
+      console.log('updated isClosed');
+    }, this.showError(`update isClosed for ${bowl.name}`));
+  }
+
+  archiveBowl(bowl) {
+    var fileContents = JSON.stringify(bowl, null, '\t');
+    var filename = bowl.name + ".json";
+    var filetype = "application/json";
+    var a = document.createElement("a");
+    a.href = "data:" + filetype + ";base64," + btoa(fileContents);
+    a['download'] = filename;
+    var e = document.createEvent("MouseEvents");
+    e.initMouseEvent("click", true, false, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
+
+  addVolunteer(bowl){
+    this.router.navigate(['/add-volunteer', bowl.id]);
+  }
+
+  refresh(): void {
+    this.router.navigateByUrl('/', {skipLocationChange: false})
+    .then(() => this.router.navigate(['/dashboard']));
+  }
 }

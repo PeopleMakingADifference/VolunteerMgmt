@@ -18,7 +18,7 @@ const cool = new csv(path_to_csv);
       uri = 'mongodb://localhost:27017/pmd';
       console.log('Database set to local.');
   } else if (process.argv[2] == '--prod' || process.argv[2] == '-p') {
-      uri = process.env.MONGODB_URI;
+      uri = process.env.MONGODB_ATLAS_URI;
       console.log('Database set to production.');
   } else {
       console.log('Defaulted database to local. Use option --prod if production needed.');

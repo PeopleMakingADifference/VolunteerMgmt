@@ -13,7 +13,7 @@ export class PushService {
     public storage: Storage, 
     public fcm: FCM,
     public platform: Platform,
-    private app: App
+    public app: App
   ){
     this.platform.ready().then(()=>{
       this.navCtrl = app.getActiveNavs()[0];

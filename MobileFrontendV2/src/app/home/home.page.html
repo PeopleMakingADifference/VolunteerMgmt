@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="pmd-toolbar">
+      <div>
+        <h1 class="title-white">PEOPLE MAKING A DIFFERENCE®</h1>
+    </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="main-grid">
+    <ion-row>
+      <ion-col justify-content-center>
+      <p>{{announcementMessage}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center class="alternate-content" id="assignment-box">
+      <p>Your assignment is:</p>
+      <div id="assignment-details">
+        <p><strong>Role: </strong>{{personAssignment}}</p>
+        <p><strong>Room #: </strong>{{personLocation}}</p>
+      </div>
+    </ion-row>
+    <ion-row>
+      <ion-col justify-content-center>
+        <p>Questions? Call Lori at: </p>
+        <p><a href="tel:1-781-963-0373">+1 (781) 963 - 0373</a></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col justify-content-center>
+        <ion-button [routerLink]="['/check-out']">DONE FOR THE DAY?</ion-button>
+      </ion-col>
+    </ion-row>
+<!--     <ion-row>
+      <ion-button (click)="onDeleteUserClick()">(Debug Mode: Log Out)</ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-button [routerLink]="['/check-out-reminded']">(Debug Mode: Check Out - Reminded)</ion-button>
+    </ion-row> -->
+  </ion-grid>
+</ion-content>

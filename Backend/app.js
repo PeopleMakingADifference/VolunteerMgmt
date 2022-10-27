@@ -1,14 +1,15 @@
 const mongodb = require('mongodb');
-// var uri = process.env.MONGODB_URI;
+// var uri = process.env.MONGODB_ATLAS_URI;
 const uri = 'mongodb://localhost:27017/pmd';
 test = require('assert');
 
 const seedData = [
     {
-        name: "Example Science Bowl",
-        id: "1234",
-        exit_id: "4321",
+        name: 'Example Science Bowl',
+        id: '1234',
+        exit_id: '4321',
         message: 'You guys are the best! Stay wholesome! <3',
+        isClosed: false,
         volunteers: [
             {
                 id: 1,
@@ -17,7 +18,7 @@ const seedData = [
                 location: 'Stark Tower',
                 checkout: false,
                 checkin: false,
-                phone: 1234567890
+                phone: 1234567890,
             },
             {
                 id: 2,
@@ -26,7 +27,7 @@ const seedData = [
                 location: 'The Death Star',
                 checkout: false,
                 checkin: false,
-                phone: 1234567891
+                phone: 1234567891,
             },
             {
                 id: 3,
@@ -35,7 +36,7 @@ const seedData = [
                 location: 'Washington',
                 checkout: false,
                 checkin: false,
-                phone: 1234567892
+                phone: 1234567892,
             },
             {
                 id: 4,
@@ -44,15 +45,16 @@ const seedData = [
                 location: 'Hellmouth',
                 checkout: false,
                 checkin: false,
-                phone: 1234567893
+                phone: 1234567893,
             },
-        ]
+        ],
    },
    {
-        name: "Another Example Bowl",
-        id: "0000",
-        exit_id: "0000",
+        name: 'Another Example Bowl',
+        id: '0000',
+        exit_id: '0000',
         message: 'Socialism will win',
+        isClosed: false,
         volunteers: [
             {
                 id: 5,
@@ -61,7 +63,7 @@ const seedData = [
                 location: 'All out of bubble gum',
                 checkout: false,
                 checkin: false,
-                phone: 1234567890
+                phone: 1234567890,
             },
             {
                 id: 6,
@@ -70,7 +72,7 @@ const seedData = [
                 location: 'Probably Florida',
                 checkout: false,
                 checkin: false,
-                phone: 1234567891
+                phone: 1234567891,
             },
             {
                 id: 7,
@@ -79,7 +81,7 @@ const seedData = [
                 location: 'Limousine',
                 checkout: false,
                 checkin: false,
-                phone: 1234567892
+                phone: 1234567892,
             },
             {
                 id: 8,
@@ -88,23 +90,19 @@ const seedData = [
                 location: 'Texas',
                 checkout: false,
                 checkin: false,
-                phone: 1234567893
+                phone: 1234567893,
             },
-        ]
-   }
+        ],
+   },
  ];
 
-mongodb.MongoClient.connect(uri, function (err, db) {
+mongodb.MongoClient.connect(uri, function(err, db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
     console.log('Connection established to', uri);
 
     // do some work here with the database.
-    var data = db.collection('bowls');
-    db.collection('bowls').insertMany(seedData, function(err, r){});
-
-    //Close connection
-    db.close();
+    db.collection('bowls').insertMany(seedData, function(err, r) {});
   }
 });

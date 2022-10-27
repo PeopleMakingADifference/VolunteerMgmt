@@ -58,12 +58,27 @@ export class AppComponent implements OnInit {
     this.http.post('/update_message',
       {
         eventId: bowl.id,
-        message : input_message
+        message : input_message,
+        toWho : 'All Volunteers'
       }
     )
     .subscribe((res) => {
       bowl.message = input_message;
     }, this.showError(`update message for ${bowl.name}`));
+
+  }
+
+  postIsClosed(bowl: any, is_closed: boolean) {
+    this.errorMessage = '';
+    this.http.post('/update_is_closed',
+      {
+        eventId: bowl.id,
+        isClosed : is_closed
+      }
+    )
+    .subscribe((res) => {
+      bowl.isClosed = is_closed;
+    }, this.showError(`update isClosed for ${bowl.name}`));
 
   }
 
