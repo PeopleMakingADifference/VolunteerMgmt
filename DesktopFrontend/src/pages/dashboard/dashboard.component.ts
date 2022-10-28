@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import 'rxjs/add/operator/map';
@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   errorMessage = '';
   bowls: any = [];
 
-  constructor(private http: Http, private router: Router, private _cookieService:CookieService) {}
+  constructor(private http: HttpClient, private router: Router, private _cookieService:CookieService) {}
 
   ngOnInit() {
     this.loadItems();
@@ -25,7 +25,6 @@ export class DashboardComponent implements OnInit {
   loadItems() {
     let urlString = "/?token=" + this._cookieService.get("userFirebaseToken");
     this.http.get(urlString)
-    .map(res => res.json())
     .subscribe(json => {
       this.bowls = json;
     }, this.showError('reach database'));

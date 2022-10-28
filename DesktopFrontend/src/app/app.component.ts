@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   errorMessage = '';
   bowls: any = [];
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.loadItems();
@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   // Gets the items into this.items by reading through the file
   loadItems() {
     this.http.get('/')
-    .map(res => res.json())
     .subscribe(json => {
       this.bowls = json;
     }, this.showError('reach database'));

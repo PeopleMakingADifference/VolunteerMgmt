@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class AddVolunteerComponent implements OnInit {
   bowlID: string;
   private sub: any;
 
-  constructor(private http: Http, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -59,7 +59,7 @@ export class AddVolunteerComponent implements OnInit {
       return;
     }
 
-    this.http.post('/add_volunteer',
+    this.http.post(<any>'/add_volunteer',
     {
       bowlID: this.bowlID,
       volunteerName: this.nameFieldText,
@@ -68,13 +68,14 @@ export class AddVolunteerComponent implements OnInit {
       volunteerAssignment: this.assignmentFieldText,
       volunteerPhone: this.phoneNumber
     })
-    .subscribe((res) => {
-      if (res.status === 200) {
+    .subscribe({
+      next: data => {
         this.feedback = "Volunteer added to database";
-      } else {
+      },
+      error: error => {
         this.feedback = "Error adding volunteer to database!";
       }
-    });
+    })
   }
 
   onNameChange(newText: string){

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MockBackend }     from '@angular/http/testing';
-import { Http, BaseRequestOptions }      from '@angular/http';
+import { HttpClient }      from '@angular/common/http';
 import { By }              from '@angular/platform-browser';
 import { DebugElement }    from '@angular/core';
 
@@ -20,13 +20,12 @@ describe('AppComponent', () => {
       ],
       providers: [
         MockBackend,
-        BaseRequestOptions,
         {
-          provide: Http,
-          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
-                  return new Http(backendInstance, defaultOptions);
+          provide: HttpClient,
+          useFactory: (backendInstance: MockBackend) => {
+                  return new HttpClient(backendInstance);
           },
-          deps: [MockBackend, BaseRequestOptions]
+          deps: [MockBackend]
         },
       ],
     });

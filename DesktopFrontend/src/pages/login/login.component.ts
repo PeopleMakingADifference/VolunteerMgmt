@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { firebase } from '@firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit {
   doLogin(username: any, password: any){
     this.afAuth.auth.signInWithEmailAndPassword(username.value, password.value)
     .then((user)=>{
-      user.getIdToken().then((token)=>{
+      user.user.getIdToken(false).then((token)=>{
           this._cookieService.put("userFirebaseToken", token)
       });
       this.router.navigate(['/dashboard']);
