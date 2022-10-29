@@ -42,6 +42,7 @@ Thumbs.db
 # Directories 		#
 #####################
 node_modules
+DesktopFrontend/.angular
 
 # API Keys, Etc   #
 ####################

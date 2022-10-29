@@ -9,8 +9,8 @@ import { LoginComponent } from '../pages/login/login.component';
 import { AddVolunteerComponent } from '../pages/addvolunteer/addvolunteer.component';
 import { VolunteerTimePipe } from './volunteer-time.pipe';
 import { VolunteerDurationPipe } from './volunteer-duration.pipe';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 
 import { CookieModule } from 'ngx-cookie';
