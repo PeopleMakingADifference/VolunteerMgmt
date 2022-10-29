@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.jumbocode.pmd',
-  appName: '"People Making A Difference"',
+  appName: 'People Making a Difference',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {

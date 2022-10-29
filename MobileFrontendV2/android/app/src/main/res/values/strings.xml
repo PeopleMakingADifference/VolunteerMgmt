@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">\"People Making A Difference\"</string>
-    <string name="title_activity_main">\"People Making A Difference\"</string>
+    <string name="app_name">People Making a Difference</string>
+    <string name="title_activity_main">People Making a Difference</string>
     <string name="package_name">com.jumbocode.pmd</string>
     <string name="custom_url_scheme">com.jumbocode.pmd</string>
 </resources>
