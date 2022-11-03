@@ -20,9 +20,16 @@ export class AppComponent implements OnInit {
   // Gets the items into this.items by reading through the file
   loadItems() {
     this.http.get('/')
-    .subscribe(json => {
-      this.bowls = json;
-    }, this.showError('reach database'));
+    .subscribe({
+      next: (json)=> {
+        this.bowls = json;
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError('reach database');
+      },
+      complete: () => console.trace('complete loadItems')
+    });
   }
 
   postAssignment(volunteer: any, input_assignment: string) {
@@ -33,9 +40,17 @@ export class AppComponent implements OnInit {
         assignment : input_assignment
       }
     )
-    .subscribe(res => {
-      volunteer.assignment = input_assignment;
-    }, this.showError(`update assignment for ${volunteer.name}`));
+    .subscribe({
+      next: ()=> {
+        volunteer.assignment = volunteer.new_assignment;
+        console.log('updated assignment');
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update assignment for ${volunteer.name}`)
+      },
+      complete: () => console.trace('complete postAssignment')
+    });
   }
 
   postLocation(volunteer: any, input_location: string) {
@@ -46,9 +61,17 @@ export class AppComponent implements OnInit {
         location : input_location
       }
     )
-    .subscribe(res => {
-      volunteer.location = input_location;
-    }, this.showError(`update location for ${volunteer.name}`));
+    .subscribe({
+      next: ()=> {
+        volunteer.location = volunteer.new_location;
+        console.log('updated location')
+      },
+      error: (e) => { 
+        console.error(e)
+        this.showError(`update location for ${volunteer.name}`)
+      },
+      complete: () => console.trace('complete postLocation')
+    });
   }
 
   postMessage(bowl: any, input_message: string) {
@@ -60,10 +83,16 @@ export class AppComponent implements OnInit {
         toWho : 'All Volunteers'
       }
     )
-    .subscribe((res) => {
-      bowl.message = input_message;
-    }, this.showError(`update message for ${bowl.name}`));
-
+    .subscribe({
+      next: ()=> {
+        bowl.message = input_message;
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update message for ${bowl.name}`);
+      },
+      complete: () => console.trace('complete postMessage')
+    });
   }
 
   postIsClosed(bowl: any, is_closed: boolean) {
@@ -74,10 +103,16 @@ export class AppComponent implements OnInit {
         isClosed : is_closed
       }
     )
-    .subscribe((res) => {
-      bowl.isClosed = is_closed;
-    }, this.showError(`update isClosed for ${bowl.name}`));
-
+    .subscribe({
+      next: ()=> {
+        bowl.isClosed = is_closed;
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update isClosed for ${bowl.name}`);
+      },
+      complete: () => console.trace('complete postIsClosed')
+    });
   }
 
   enableEditing(volunteer: any) {

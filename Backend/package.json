@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "description": "Volunteer management event server",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "main": "index.js",
   "scripts": {

@@ -24,9 +24,16 @@ export class DashboardComponent implements OnInit {
   loadItems() {
     let urlString = "/?token=" + this._cookieService.get("userFirebaseToken");
     this.http.get(urlString)
-    .subscribe(json => {
-      this.bowls = json;
-    }, this.showError('reach database'));
+    .subscribe({
+      next: (json)=> {
+        this.bowls = json;
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError('reach database');
+      },
+      complete: () => console.trace('complete loadItems')
+    });
   }
 
   postAssignment(volunteer: any) {
@@ -37,12 +44,17 @@ export class DashboardComponent implements OnInit {
         assignment : volunteer.new_assignment
       }
     )
-    .subscribe(
-      () => {
+    .subscribe({
+      next: ()=> {
         volunteer.assignment = volunteer.new_assignment;
-        console.log('updated assignment')
+        console.log('updated assignment');
       },
-      this.showError(`update assignment for ${volunteer.name}`));
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update assignment for ${volunteer.name}`)
+      },
+      complete: () => console.trace('complete postAssignment')
+    });
   }
 
   postLocation(volunteer: any) {
@@ -53,12 +65,17 @@ export class DashboardComponent implements OnInit {
         location : volunteer.new_location
       }
     )
-    .subscribe(
-      ()=>{
+    .subscribe({
+      next: ()=> {
         volunteer.location = volunteer.new_location;
         console.log('updated location')
       },
-      this.showError(`update location for ${volunteer.name}`));
+      error: (e) => { 
+        console.error(e)
+        this.showError(`update location for ${volunteer.name}`)
+      },
+      complete: () => console.trace('complete postLocation')
+    });
   }
 
   postCheckin(volunteer: any) {
@@ -70,12 +87,17 @@ export class DashboardComponent implements OnInit {
         checkin : value
       }
     )
-    .subscribe(
-      ()=>{
+    .subscribe({
+      next: ()=> {
         volunteer.checkin = value;
         console.log('updated checkin time')
       },
-      this.showError(`update checkin for ${volunteer.name}`));
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update checkin for ${volunteer.name}`);
+      },
+      complete: () => console.trace('complete postCheckin')
+    });
   }
 
   postCheckout(volunteer: any) {
@@ -87,12 +109,17 @@ export class DashboardComponent implements OnInit {
         checkout : value
       }
     )
-    .subscribe(
-      ()=>{
+    .subscribe({
+      next: ()=> {
         volunteer.checkout = value;
         console.log('updated checkout time')
       },
-      this.showError(`update checkout for ${volunteer.name}`));
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update checkout for ${volunteer.name}`);
+      },
+      complete: () => console.trace('complete postCheckout')
+    });
   }
 
   postVolunteerMessage(bowl: any, user: any) {
@@ -108,14 +135,20 @@ export class DashboardComponent implements OnInit {
         toWho : user
       }
     )
-    .subscribe((res) => {
-      // Update bowl message if sent to all users
-      if (user === 'All Volunteers') {
-        bowl.message = bowl.new_message;
-      }
-      console.log('updated message');
-    }, this.showError(`update message for ${bowl.name}`));
-
+    .subscribe({
+      next: ()=> {
+        // Update bowl message if sent to all users
+        if (user === 'All Volunteers') {
+          bowl.message = bowl.new_message;
+        }
+        console.log('updated message');
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update message for ${bowl.name}`);
+      },
+      complete: () => console.trace('complete postVolunteerMessage')
+    });
   }
 
   enableEditing(volunteer: any) {
@@ -157,10 +190,16 @@ export class DashboardComponent implements OnInit {
         eventId: bowl.id
       }
     )
-    .subscribe((res) => {
-      console.log('reminder', res);
-    },
-    this.showError(`send reminder for ${bowl.name}`));
+    .subscribe({
+      next: (res)=> {
+        console.log('reminder', res);
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`send reminder for ${bowl.name}`);
+      },
+      complete: () => console.trace('complete sendCheckoutReminder')
+    });
   }
 
   deleteBowl(bowl){
@@ -176,13 +215,17 @@ export class DashboardComponent implements OnInit {
         eventId : bowl.id
       }
     )
-    .subscribe(
-      ()=>{
+    .subscribe({
+      next: ()=> {
         console.log(`deleted ${bowl.name}`);
         bowl.deleted = true;
       },
-      this.showError(`delete event ${bowl.name}`)
-    );
+      error: (e) => { 
+        console.error(e);
+        this.showError(`delete event ${bowl.name}`);
+      },
+      complete: () => console.trace('complete confirmDelete')
+    });
   }
 
   cancelDelete(bowl){
@@ -202,11 +245,18 @@ export class DashboardComponent implements OnInit {
         isClosed: true
       }
     )
-    .subscribe((res) => {
-      bowl.isClosed = true;
-      bowl.closing = false;
-      console.log('updated isClosed');
-    }, this.showError(`update isClosed for ${bowl.name}`));
+    .subscribe({
+      next: ()=> {
+        bowl.isClosed = true;
+        bowl.closing = false;
+        console.log('updated isClosed');
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update isClosed for ${bowl.name}`);
+      },
+      complete: () => console.trace('complete confirmClose')
+    });
   }
 
   cancelClose(bowl){
@@ -222,10 +272,17 @@ export class DashboardComponent implements OnInit {
         isClosed: false
       }
     )
-    .subscribe((res) => {
-      bowl.isClosed = false;
-      console.log('updated isClosed');
-    }, this.showError(`update isClosed for ${bowl.name}`));
+    .subscribe({
+      next: ()=> {
+        bowl.isClosed = false;
+        console.log('updated isClosed');
+      },
+      error: (e) => { 
+        console.error(e);
+        this.showError(`update isClosed for ${bowl.name}`);
+      },
+      complete: () => console.trace('complete reopenBowl')
+    });
   }
 
   archiveBowl(bowl) {
