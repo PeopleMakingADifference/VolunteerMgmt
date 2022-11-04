@@ -43,6 +43,7 @@ export class PushService {
         PushNotifications.requestPermissions().then(result => {
           if (result.receive === 'granted') {
             // Register with Apple / Google to receive push via APNS/FCM
+            console.warn('Push registration started.....');
             PushNotifications.register();
           } else {
             console.log('Push permission request failed: ' + JSON.stringify(result));

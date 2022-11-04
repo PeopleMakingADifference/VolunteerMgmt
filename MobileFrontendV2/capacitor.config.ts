@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   plugins: {
     PushNotifications: {
-      presentationOptions: ["sound", "alert"],
+      presentationOptions: ["badge", "sound", "alert"],
     },
     SplashScreen: {
       launchShowDuration: 1000,
