@@ -14,8 +14,7 @@ module.exports = function(app, dbconn) {
                 if (items.length > 0) {
                     for (let v of items[0].volunteers) {
                         // check that the user has checked in, but has not checked out
-                        if (v.id === parseInt(req.body.id) && v.checkin && v.checkin > 0 &&
-                            v.checkout == false) {
+                        if (v.id === parseInt(req.body.uid) && v.checkin && v.checkin > 0 && !v.checkout) {
                             const [checkoutHour, checkoutMinute] = req.body.checkoutTime.split(':');
                             const checkinTime = new Date(v.checkin);
                             const checkinHour = checkinTime.getHours();
@@ -58,7 +57,7 @@ module.exports = function(app, dbconn) {
                             );
                             res.send('Successfully Checked Out');
                             return;
-                        } else if (v.id === parseInt(req.body.id)) {
+                        } else if (v.id === parseInt(req.body.uid)) {
                             res.status(400);
                             res.send('Error: You have already checked out!');
                             return;
