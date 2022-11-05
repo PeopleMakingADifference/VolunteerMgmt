@@ -3,7 +3,8 @@ module.exports = function(dbconn, phone_num, uid, debug_mode){
         return;
     }
 
-    if(debug_mode === "true"){
+    // Allow for Apple Testing
+    if ((debug_mode === "true") || (phone_num === "1234567890")) {
         dbconn().then((db) => {
             db.collection('bowls').updateOne({'volunteers.id': parseInt(uid)},
             {
