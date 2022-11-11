@@ -17,11 +17,20 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router, private _cookieService:CookieService) {}
 
   ngOnInit() {
-    this.loadItems();
+    this.loadItems(false);
+  }
+
+  // Bit of a hack, but need to delay a bit to allow config update before refresh
+  sleep(ms) {
+    const date = Date.now();
+    let now = null;
+    do {
+      now = Date.now();
+    } while (now - date < ms);
   }
 
   // Gets the items into this.items by reading through the file
-  loadItems() {
+  loadItems(refresh: boolean) {
     let urlString = "/?token=" + this._cookieService.get("userFirebaseToken");
     this.http.get(urlString)
     .subscribe({
@@ -32,7 +41,13 @@ export class DashboardComponent implements OnInit {
         console.error(e);
         this.showError('reach database');
       },
-      complete: () => console.trace('complete loadItems')
+      complete: () => {
+        console.trace('complete loadItems');
+        if (refresh) {
+          this.sleep(250);
+          this.refresh();
+        }
+      }
     });
   }
 
@@ -149,6 +164,10 @@ export class DashboardComponent implements OnInit {
       },
       complete: () => console.trace('complete postVolunteerMessage')
     });
+    // Reload so new message is displayed
+    if (user === 'All Volunteers') {
+      this.loadItems(true);
+    }
   }
 
   enableEditing(volunteer: any) {
@@ -178,6 +197,7 @@ export class DashboardComponent implements OnInit {
     }
 
     volunteer.edit = false;
+    this.loadItems(true);
   }
 
   goToCreateEvent(){
@@ -219,6 +239,7 @@ export class DashboardComponent implements OnInit {
       next: ()=> {
         console.log(`deleted ${bowl.name}`);
         bowl.deleted = true;
+        this.loadItems(true);
       },
       error: (e) => { 
         console.error(e);
@@ -250,6 +271,7 @@ export class DashboardComponent implements OnInit {
         bowl.isClosed = true;
         bowl.closing = false;
         console.log('updated isClosed');
+        this.loadItems(true);
       },
       error: (e) => { 
         console.error(e);
@@ -276,6 +298,7 @@ export class DashboardComponent implements OnInit {
       next: ()=> {
         bowl.isClosed = false;
         console.log('updated isClosed');
+        this.loadItems(true);
       },
       error: (e) => { 
         console.error(e);
