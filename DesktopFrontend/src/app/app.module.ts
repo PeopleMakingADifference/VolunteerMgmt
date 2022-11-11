@@ -9,6 +9,7 @@ import { LoginComponent } from '../pages/login/login.component';
 import { AddVolunteerComponent } from '../pages/addvolunteer/addvolunteer.component';
 import { VolunteerTimePipe } from './volunteer-time.pipe';
 import { VolunteerDurationPipe } from './volunteer-duration.pipe';
+import { VolunteerSortPipe } from './volunteer-sort.pipe';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     LoginComponent,
     VolunteerTimePipe,
     VolunteerDurationPipe,
+    VolunteerSortPipe,
     AddVolunteerComponent
   ],
   imports: [
