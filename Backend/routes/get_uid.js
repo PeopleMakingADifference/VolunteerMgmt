@@ -6,9 +6,9 @@ module.exports = function(app, dbconn) {
                     // send only the minimum data the frontend needs
                     for (let v of items[0].volunteers) {
                         if (v.id === parseInt(req.params.uid)) {
-                            const {name, assignment, location} = v;
+                            const {firstname, lastname, assignment, location} = v;
                             res.send({
-                                'name': name,
+                                'name': firstname + ' ' + lastname,
                                 'assignment': assignment,
                                 'location': location,
                             });

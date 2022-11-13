@@ -13,7 +13,8 @@ const seedData = [
         volunteers: [
             {
                 id: 1,
-                name: 'Tony Stark',
+                firstname: 'Tony',
+                lastname: 'Stark',
                 assignment: 'Build Ironman suit to escape cave',
                 location: 'Stark Tower',
                 checkout: false,
@@ -22,7 +23,8 @@ const seedData = [
             },
             {
                 id: 2,
-                name: 'Darth Vader',
+                firstname: 'Darth',
+                lastname: 'Vader',
                 assignment: 'Use the Force (For evil)',
                 location: 'The Death Star',
                 checkout: false,
@@ -31,7 +33,8 @@ const seedData = [
             },
             {
                 id: 3,
-                name: 'Claire Underwood',
+                firstname: 'Claire',
+                lastname: 'Underwood',
                 assignment: 'Scheme',
                 location: 'Washington',
                 checkout: false,
@@ -40,7 +43,8 @@ const seedData = [
             },
             {
                 id: 4,
-                name: 'Buffy the Vampire Slayer',
+                firstname: 'Buffy the',
+                lastname: 'Vampire Slayer',
                 assignment: 'Slay vampires',
                 location: 'Hellmouth',
                 checkout: false,
@@ -58,7 +62,8 @@ const seedData = [
         volunteers: [
             {
                 id: 5,
-                name: 'Rowdy Roddy Piper',
+                firstname: 'Rowdy Roddy',
+                lastname: 'Piper',
                 assignment: 'Star in the movie They Live',
                 location: 'All out of bubble gum',
                 checkout: false,
@@ -67,7 +72,8 @@ const seedData = [
             },
             {
                 id: 6,
-                name: 'Hulk Hogan',
+                firstname: 'Hulk',
+                lastname: 'Hogan',
                 assignment: 'Destroy Gawker Media',
                 location: 'Probably Florida',
                 checkout: false,
@@ -76,7 +82,8 @@ const seedData = [
             },
             {
                 id: 7,
-                name: 'The Nature Boy Ric Flair',
+                firstname: 'The Nature Boy Ric',
+                lastname: 'Flair',
                 assignment: 'Wooo!',
                 location: 'Limousine',
                 checkout: false,
@@ -85,7 +92,8 @@ const seedData = [
             },
             {
                 id: 8,
-                name: 'The Undertaker',
+                firstname: 'The',
+                lastname: 'Undertaker',
                 assignment: 'Win the 2007 Royal Rumble for some reason',
                 location: 'Texas',
                 checkout: false,

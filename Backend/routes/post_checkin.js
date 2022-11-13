@@ -37,12 +37,12 @@ module.exports = function(app, dbconn) {
                   }
 
                   // send only the data we need to send
-                  const {id, name} = v;
+                  const {id, firstname, lastname} = v;
 
                   // send the sms verification token
                   sms(dbconn, req.body.phone, id, req.body.debug);
 
-                  res.send({'id': id, 'name': name});
+                  res.send({'id': id, 'name': firstname + ' ' + lastname});
                   return;
                 }
               }

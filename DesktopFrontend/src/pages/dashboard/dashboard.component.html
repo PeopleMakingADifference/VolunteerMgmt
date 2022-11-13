@@ -38,7 +38,7 @@
           <label class="Tahoma" for="message">Send a message to:</label>
           <select name="volunteerSelect" #volunteerSelect >
             <option>All Volunteers</option>
-            <option *ngFor="let vol of bowl.volunteers">{{vol.name}} </option>
+            <option *ngFor="let vol of bowl.volunteers | volunteerSort:'lastname'">{{vol.firstname}} {{vol.lastname}}</option>
           </select>
           <input 
             type="text" 
@@ -62,8 +62,8 @@
           <th> Check out </th>
           <th> Volunteering Time </th>
 
-          <tr *ngFor="let volunteer of bowl.volunteers">
-              <td> {{ volunteer.name }} </td>
+          <tr *ngFor="let volunteer of bowl.volunteers | volunteerSort:'lastname'">
+              <td> {{ volunteer.firstname }} {{ volunteer.lastname }} </td>
 
               <td *ngIf="volunteer.edit">
                 <input type="text" name="vAssign" #vassign 

@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update assignment for ${volunteer.name}`)
+        this.showError(`update assignment for ${volunteer.firstname} ${volunteer.lastname}`)
       },
       complete: () => console.trace('complete postAssignment')
     });
@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e)
-        this.showError(`update location for ${volunteer.name}`)
+        this.showError(`update location for ${volunteer.firstname} ${volunteer.lastname}`)
       },
       complete: () => console.trace('complete postLocation')
     });

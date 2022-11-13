@@ -11,7 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AddVolunteerComponent implements OnInit {
 
   csvFile: any;
-  nameFieldText: string;
+  firstnameFieldText: string;
+  lastnameFieldText: string;
   emailFieldText: string;
   locationFieldText: string;
   assignmentFieldText: string;
@@ -33,8 +34,12 @@ export class AddVolunteerComponent implements OnInit {
 
   onSubmitClick() {
     this.showFeedback = true;
-    if(!this.nameFieldText){
-      this.feedback = "Please add the volunteer name.";
+    if(!this.firstnameFieldText){
+      this.feedback = "Please add the volunteer first name.";
+      return;
+    }
+    if(!this.lastnameFieldText){
+      this.feedback = "Please add the volunteer last name.";
       return;
     }
     if(!this.emailFieldText){
@@ -62,7 +67,8 @@ export class AddVolunteerComponent implements OnInit {
     this.http.post(<any>'/add_volunteer',
     {
       bowlID: this.bowlID,
-      volunteerName: this.nameFieldText,
+      volunteerFirstName: this.firstnameFieldText,
+      volunteerLastName: this.lastnameFieldText,
       volunteerEmail: this.emailFieldText,
       volunteerLocation: this.locationFieldText,
       volunteerAssignment: this.assignmentFieldText,
@@ -78,8 +84,12 @@ export class AddVolunteerComponent implements OnInit {
     })
   }
 
-  onNameChange(newText: string){
-    this.nameFieldText = newText;
+  onFirstNameChange(newText: string){
+    this.firstnameFieldText = newText;
+  }
+
+  onLastNameChange(newText: string){
+    this.lastnameFieldText = newText;
   }
 
   onEmailChange(newText: string){

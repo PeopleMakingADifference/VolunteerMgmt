@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update assignment for ${volunteer.name}`)
+        this.showError(`update assignment for ${volunteer.firstname} ${volunteer.lastname}`)
       },
       complete: () => console.trace('complete postAssignment')
     });
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e)
-        this.showError(`update location for ${volunteer.name}`)
+        this.showError(`update location for ${volunteer.firstname} ${volunteer.lastname}`)
       },
       complete: () => console.trace('complete postLocation')
     });
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update checkin for ${volunteer.name}`);
+        this.showError(`update checkin for ${volunteer.firstname} ${volunteer.lastname}`);
       },
       complete: () => console.trace('complete postCheckin')
     });
@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update checkout for ${volunteer.name}`);
+        this.showError(`update checkout for ${volunteer.firstname} ${volunteer.lastname}`);
       },
       complete: () => console.trace('complete postCheckout')
     });

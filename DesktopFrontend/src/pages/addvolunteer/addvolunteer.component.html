@@ -9,8 +9,12 @@
 
 <div class="upload-form">
   <tr>
-    <td>Name:</td>
-    <td><input type="text" #nameField (keyup)="onNameChange(nameField.value)" /></td>
+    <td>First Name:</td>
+    <td><input type="text" #firstnameField (keyup)="onFirstNameChange(firstnameField.value)" /></td>
+  </tr>
+  <tr>
+    <td>Last Name:</td>
+    <td><input type="text" #lastnameField (keyup)="onLastNameChange(lastnameField.value)" /></td>
   </tr>
   <tr>
     <td>Email:</td>
