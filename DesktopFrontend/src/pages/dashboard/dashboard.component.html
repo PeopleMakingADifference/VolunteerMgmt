@@ -83,7 +83,6 @@
               <td *ngIf="!volunteer.edit">
                 {{ volunteer.location }}
               </td>
-              <!--  Add this in and remove static case if editing of checkin time is needed
               <td *ngIf="volunteer.edit">
                 <input type="text" name="vCheckin" #vcheckin
                   (keyup.enter)="saveEdits(volunteer)"
@@ -91,10 +90,6 @@
                   value="{{ volunteer.checkin | volunteerTime }}">
               </td>
               <td *ngIf="!volunteer.edit">
-                {{ volunteer.checkin | volunteerTime }}
-              </td>
-              -->
-              <td>
                 {{ volunteer.checkin | volunteerTime }}
               </td>
               <td *ngIf="volunteer.edit">
