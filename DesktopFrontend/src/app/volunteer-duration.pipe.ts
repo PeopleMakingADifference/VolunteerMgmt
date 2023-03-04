@@ -12,6 +12,8 @@ export class VolunteerDurationPipe implements PipeTransform {
       hoursDuration++;
       minutesDuration = 0;
     }
-    return `${String(hoursDuration).padStart(2, '0')}:${String(minutesDuration).padStart(2, '0')}`
+    // Show in fractional hours
+    minutesDuration = (100 * minutesDuration) / 60;
+    return `${String(hoursDuration)}.${String(minutesDuration).padStart(2, '0')}`
   }
 }
