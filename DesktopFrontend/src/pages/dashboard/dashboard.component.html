@@ -110,7 +110,9 @@
               <td *ngIf="!bowl.isClosed && volunteer.edit">
                 <button class="pmd-button" (click)="saveEdits(volunteer)">Save</button>
               </td>
-              
+              <td *ngIf="!bowl.isClosed && volunteer.edit">
+                <button class="pmd-button" (click)="deleteVolunteer(volunteer)">Delete</button>
+              </td>
           </tr>
         </table>
       </ul>

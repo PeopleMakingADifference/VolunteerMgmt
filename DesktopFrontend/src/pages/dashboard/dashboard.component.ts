@@ -137,6 +137,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  postDeleteVolunteer(volunteer: any) {
+    this.errorMessage = '';
+    this.http.post('/delete_volunteer',
+      {
+        uid : volunteer.id,
+      }
+    )
+    .subscribe({
+      next: ()=> {
+        console.log(`removed volunteer ${volunteer.firstname} ${volunteer.lastname}`);
+      },
+      error: (e) => {
+        console.error(e);
+        this.showError(`delete volunteer for ${volunteer.firstname} ${volunteer.lastname}`);
+      },
+      complete: () => console.trace('complete postDeleteVolunteer')
+    });
+  }
+
   postVolunteerMessage(bowl: any, user: any) {
     if(!bowl.new_message || bowl.new_message === bowl.message){
       console.log("nope");
@@ -197,6 +216,13 @@ export class DashboardComponent implements OnInit {
     }
 
     volunteer.edit = false;
+    this.loadItems(true);
+  }
+
+  deleteVolunteer(volunteer: any){
+    this.postDeleteVolunteer(volunteer);
+    volunteer.edit = false;
+    this.sleep(250);
     this.loadItems(true);
   }
 
