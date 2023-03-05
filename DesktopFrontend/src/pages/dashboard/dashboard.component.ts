@@ -308,12 +308,54 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  calcTotalTime(value: number) {
+    if (!(value > 0)) return '';
+    const seconds = value / 1000;
+    let hoursDuration = Math.floor(seconds / (60 * 60));
+    let minutesDuration = Math.floor((seconds - (hoursDuration * (60 * 60))) / 60);
+    minutesDuration = 15 * (Math.round(minutesDuration / 15));
+    if(minutesDuration === 60){
+      hoursDuration++;
+      minutesDuration = 0;
+    }
+    // Show in fractional hours
+    minutesDuration = (100 * minutesDuration) / 60;
+    return `${String(hoursDuration)}.${String(minutesDuration).padStart(2, '0')}`
+  }
+
+  timeToStr(time) {
+    var str = '';
+    if (typeof time == "number") {
+      str = new Date(time).toLocaleDateString('en-US', {
+        day: 'numeric', year: '2-digit', month: 'numeric', hour: 'numeric', minute: 'numeric'});
+    }
+    return str;
+  }
+
+  convertBowlToCSV(bowl: any) {
+    // Create header row
+    var str = 'Last Name,First Name,Assignment,Location,Check In,Check Out,Total Time\r\n';
+
+    // Add in all volunteers
+    for (let volunteer of bowl.volunteers) {
+        var line = '\"' + volunteer.lastname + '\",';
+        line += '\"' + volunteer.firstname + '\",';
+        line += '\"' + volunteer.assignment + '\",';
+        line += '\"' + volunteer.location + '\",';
+        line += '\"' + this.timeToStr(volunteer.checkin) + '\",';
+        line += '\"' + this.timeToStr(volunteer.checkout) + '\",';
+        line += '\"' + this.calcTotalTime(volunteer.checkout - volunteer.checkin) + '\"';
+        str += line + '\r\n';
+    }
+    return str;
+  }
+
   archiveBowl(bowl) {
-    var fileContents = JSON.stringify(bowl, null, '\t');
-    var filename = bowl.name + ".json";
-    var filetype = "application/json";
+    var data = this.convertBowlToCSV(bowl);
+    var filename = bowl.name + ".csv";
+    var filetype = "text/csv";
     var a = document.createElement("a");
-    a.href = "data:" + filetype + ";base64," + btoa(fileContents);
+    a.href = "data:" + filetype + ";base64," + btoa(data);
     a['download'] = filename;
     var e = document.createEvent("MouseEvents");
     e.initMouseEvent("click", true, false, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
