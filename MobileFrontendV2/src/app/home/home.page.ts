@@ -94,6 +94,16 @@ export class HomePage implements OnInit {
               this.personName = json.name;
               this.personAssignment = json.assignment;
               this.personLocation = json.location;
+              // If the backend needs our token, get it again
+              if (json.tokenNeeded && (json.tokenNeeded === 'yes')) {
+                this.pushService.register(
+                  this.userService.getUser(),
+                  this.configService.getEndpointUrl()
+                )
+                .then((rsp) => {
+                  console.log('push response', rsp);
+                });
+              }
             } else {
               throw new Error(`JSON response from ${
                   apiEndpoint} formatted incorrectly, expecting at least one result.`);
