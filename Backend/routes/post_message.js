@@ -38,7 +38,8 @@ module.exports = function(app, dbconn) {
                     if (sendOne) {
                         let uid = 0;
                         for (let item of items[0].volunteers) {
-                            if (item['name'] === req.body.toWho) {
+                            let name = item['firstname'] + ' ' + item['lastname'];
+                            if (name === req.body.toWho) {
                                 uid = item['id'];
                                 break;
                             }
