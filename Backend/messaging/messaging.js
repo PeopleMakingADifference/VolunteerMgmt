@@ -19,9 +19,6 @@ module.exports = {
             'volunteers': {
               $elemMatch: {
                 id: uid,
-                token: {
-                  $exists: true,
-                },
               },
             },
           },
@@ -34,6 +31,10 @@ module.exports = {
               if (v.id === uid) {
                 let message = payload;
                 message.token = v.token;
+                if (!message.token) {
+                  console.error('No token for uid: ' + uid);
+                  return;
+                }
                 getMessaging().send(message)
                 .then((response) => {
                   resolve(response);

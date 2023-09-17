@@ -7,10 +7,17 @@ module.exports = function(app, dbconn) {
                     for (let v of items[0].volunteers) {
                         if (v.id === parseInt(req.params.uid)) {
                             const {firstname, lastname, assignment, location} = v;
+                            let tokenNeeded = 'yes';
+                            if (v.token) {
+                              tokenNeeded = 'no';
+                            } else {
+                              console.log('Token is needed! for uid:' + v.id);
+                            }
                             res.send({
                                 'name': firstname + ' ' + lastname,
                                 'assignment': assignment,
                                 'location': location,
+                                'tokenNeeded': tokenNeeded,
                             });
                             return;
                         }
