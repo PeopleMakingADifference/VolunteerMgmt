@@ -12,6 +12,7 @@ import * as moment from 'moment';
 
 export class DashboardComponent implements OnInit {
   errorMessage = '';
+  messageStatus: any = [];
   bowls: any = [];
 
   constructor(private http: HttpClient, private router: Router, private _cookieService:CookieService) {}
@@ -170,23 +171,23 @@ export class DashboardComponent implements OnInit {
       }
     )
     .subscribe({
-      next: ()=> {
+      next: (data)=> {
         // Update bowl message if sent to all users
         if (user === 'All Volunteers') {
           bowl.message = bowl.new_message;
         }
+        let dataStr = JSON.stringify(data, ["response"]);
+        let res = JSON.parse(dataStr);
+        this.messageStatus[bowl.name] = res.response;
         console.log('updated message');
       },
-      error: (e) => { 
-        console.error(e);
+      error: (e) => {
+        console.error(`Error sending message: ${e.message}`);
+        this.messageStatus[bowl.name] = e.message;
         this.showError(`update message for ${bowl.name}`);
       },
       complete: () => console.trace('complete postVolunteerMessage')
     });
-    // Reload so new message is displayed
-    if (user === 'All Volunteers') {
-      this.loadItems(true);
-    }
   }
 
   enableEditing(volunteer: any) {

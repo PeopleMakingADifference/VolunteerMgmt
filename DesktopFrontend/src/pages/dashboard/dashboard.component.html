@@ -49,6 +49,7 @@
             class="pmd-message"
           />
           <button class="pmd-button" (click)="postVolunteerMessage(bowl, volunteerSelect.value)">Send</button>
+          <label class="Tacoma" *ngIf="messageStatus[bowl.name]">&nbsp;&nbsp;&nbsp;Message Status: {{ messageStatus[bowl.name] }}</label>
         </p>
       </div>
 

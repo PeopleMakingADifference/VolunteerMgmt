@@ -33,6 +33,7 @@ module.exports = {
                 message.token = v.token;
                 if (!message.token) {
                   console.error('No token for uid: ' + uid);
+                  reject({'message' : 'No message token'});
                   return;
                 }
                 getMessaging().send(message)
@@ -88,7 +89,7 @@ module.exports = {
               for (rejected in rejections) {
                 console.log('Rejection reason: ${rejected.reason}');
               }
-              resolve(`Attempted to send ${results.length}, ${results.filter((x) => x.status === 'resolved').length} succeeded.`);
+              resolve(`Online volunteers: ${results.length}, Messages sent: ${results.filter((x) => x.status === 'resolved').length}`);
               return;
             })
             .catch((err) => {
