@@ -12,6 +12,7 @@ import * as moment from 'moment';
 
 export class DashboardComponent implements OnInit {
   errorMessage = '';
+  messageStatus: any = [];
   bowls: any = [];
 
   constructor(private http: HttpClient, private router: Router, private _cookieService:CookieService) {}
@@ -66,7 +67,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update assignment for ${volunteer.name}`)
+        this.showError(`update assignment for ${volunteer.firstname} ${volunteer.lastname}`)
       },
       complete: () => console.trace('complete postAssignment')
     });
@@ -87,7 +88,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e)
-        this.showError(`update location for ${volunteer.name}`)
+        this.showError(`update location for ${volunteer.firstname} ${volunteer.lastname}`)
       },
       complete: () => console.trace('complete postLocation')
     });
@@ -109,7 +110,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update checkin for ${volunteer.name}`);
+        this.showError(`update checkin for ${volunteer.firstname} ${volunteer.lastname}`);
       },
       complete: () => console.trace('complete postCheckin')
     });
@@ -131,9 +132,28 @@ export class DashboardComponent implements OnInit {
       },
       error: (e) => { 
         console.error(e);
-        this.showError(`update checkout for ${volunteer.name}`);
+        this.showError(`update checkout for ${volunteer.firstname} ${volunteer.lastname}`);
       },
       complete: () => console.trace('complete postCheckout')
+    });
+  }
+
+  postDeleteVolunteer(volunteer: any) {
+    this.errorMessage = '';
+    this.http.post('/delete_volunteer',
+      {
+        uid : volunteer.id,
+      }
+    )
+    .subscribe({
+      next: ()=> {
+        console.log(`removed volunteer ${volunteer.firstname} ${volunteer.lastname}`);
+      },
+      error: (e) => {
+        console.error(e);
+        this.showError(`delete volunteer for ${volunteer.firstname} ${volunteer.lastname}`);
+      },
+      complete: () => console.trace('complete postDeleteVolunteer')
     });
   }
 
@@ -151,23 +171,23 @@ export class DashboardComponent implements OnInit {
       }
     )
     .subscribe({
-      next: ()=> {
+      next: (data)=> {
         // Update bowl message if sent to all users
         if (user === 'All Volunteers') {
           bowl.message = bowl.new_message;
         }
+        let dataStr = JSON.stringify(data, ["response"]);
+        let res = JSON.parse(dataStr);
+        this.messageStatus[bowl.name] = res.response;
         console.log('updated message');
       },
-      error: (e) => { 
-        console.error(e);
+      error: (e) => {
+        console.error(`Error sending message: ${e.message}`);
+        this.messageStatus[bowl.name] = e.message;
         this.showError(`update message for ${bowl.name}`);
       },
       complete: () => console.trace('complete postVolunteerMessage')
     });
-    // Reload so new message is displayed
-    if (user === 'All Volunteers') {
-      this.loadItems(true);
-    }
   }
 
   enableEditing(volunteer: any) {
@@ -197,6 +217,13 @@ export class DashboardComponent implements OnInit {
     }
 
     volunteer.edit = false;
+    this.loadItems(true);
+  }
+
+  deleteVolunteer(volunteer: any){
+    this.postDeleteVolunteer(volunteer);
+    volunteer.edit = false;
+    this.sleep(250);
     this.loadItems(true);
   }
 
@@ -308,12 +335,53 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  calcTotalTime(value: number) {
+    if (!(value > 0)) return '';
+    const seconds = value / 1000;
+    let hoursDuration = Math.floor(seconds / (60 * 60));
+    let minutesDuration = Math.floor((seconds - (hoursDuration * (60 * 60))) / 60);
+    if(minutesDuration === 60){
+      hoursDuration++;
+      minutesDuration = 0;
+    }
+    // Show in fractional hours
+    minutesDuration = Math.floor((100 * minutesDuration) / 60);
+    return `${String(hoursDuration)}.${String(minutesDuration).padStart(2, '0')}`
+  }
+
+  timeToStr(time) {
+    var str = '';
+    if (typeof time == "number") {
+      str = new Date(time).toLocaleDateString('en-US', {
+        day: 'numeric', year: '2-digit', month: 'numeric', hour: 'numeric', minute: 'numeric'});
+    }
+    return str;
+  }
+
+  convertBowlToCSV(bowl: any) {
+    // Create header row
+    var str = 'Last Name,First Name,Assignment,Location,Check In,Check Out,Total Time\r\n';
+
+    // Add in all volunteers
+    for (let volunteer of bowl.volunteers) {
+        var line = '\"' + volunteer.lastname + '\",';
+        line += '\"' + volunteer.firstname + '\",';
+        line += '\"' + volunteer.assignment + '\",';
+        line += '\"' + volunteer.location + '\",';
+        line += '\"' + this.timeToStr(volunteer.checkin) + '\",';
+        line += '\"' + this.timeToStr(volunteer.checkout) + '\",';
+        line += '\"' + this.calcTotalTime(volunteer.checkout - volunteer.checkin) + '\"';
+        str += line + '\r\n';
+    }
+    return str;
+  }
+
   archiveBowl(bowl) {
-    var fileContents = JSON.stringify(bowl, null, '\t');
-    var filename = bowl.name + ".json";
-    var filetype = "application/json";
+    var data = this.convertBowlToCSV(bowl);
+    var filename = bowl.name + ".csv";
+    var filetype = "text/csv";
     var a = document.createElement("a");
-    a.href = "data:" + filetype + ";base64," + btoa(fileContents);
+    a.href = "data:" + filetype + ";base64," + btoa(data);
     a['download'] = filename;
     var e = document.createEvent("MouseEvents");
     e.initMouseEvent("click", true, false, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);

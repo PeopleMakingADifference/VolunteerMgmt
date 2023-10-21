@@ -49,8 +49,8 @@ describe('AppComponent', () => {
     expect(el.textContent).toContain('The names and assignments of the volunteers are:');
   });
   it('should display a volunteer and assignment', () => {
-    comp.volunteers = [{name:'Deadpool', assignment:'Mandatory Community Service'}]
-    comp.volunteers[0].name =       'Deadpool';
+    comp.volunteers = [{lastname:'Deadpool', assignment:'Mandatory Community Service'}]
+    comp.volunteers[0].lastname =       'Deadpool';
     comp.volunteers[0].assignment = 'Mandatory Community Service';
     de = fixture.debugElement.query(By.css('ul'));
     el = de.nativeElement;

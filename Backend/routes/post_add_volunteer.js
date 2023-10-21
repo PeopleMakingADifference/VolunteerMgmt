@@ -15,7 +15,8 @@ module.exports = function(app, dbconn) {
                 }
                 maxId += 1;
                 data.id = maxId;
-                data.name = req.body.volunteerName;
+                data.firstname = req.body.volunteerFirstName;
+                data.lastname = req.body.volunteerLastName;
                 data.email = req.body.volunteerEmail;
                 data.assignment = req.body.volunteerAssignment;
                 data.location = req.body.volunteerLocation;

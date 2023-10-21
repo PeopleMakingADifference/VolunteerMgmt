@@ -6,7 +6,6 @@ module.exports = function(app, dbconn) {
           'volunteers': {
             $elemMatch: {
               id: parseInt(req.body.uid),
-              verif_code: req.body.verif_code,
             },
           },
         },

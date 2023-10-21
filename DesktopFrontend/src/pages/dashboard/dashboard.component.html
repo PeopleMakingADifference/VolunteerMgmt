@@ -38,7 +38,7 @@
           <label class="Tahoma" for="message">Send a message to:</label>
           <select name="volunteerSelect" #volunteerSelect >
             <option>All Volunteers</option>
-            <option *ngFor="let vol of bowl.volunteers">{{vol.name}} </option>
+            <option *ngFor="let vol of bowl.volunteers | volunteerSort:'lastname'">{{vol.firstname}} {{vol.lastname}}</option>
           </select>
           <input 
             type="text" 
@@ -49,6 +49,7 @@
             class="pmd-message"
           />
           <button class="pmd-button" (click)="postVolunteerMessage(bowl, volunteerSelect.value)">Send</button>
+          <label class="Tacoma" *ngIf="messageStatus[bowl.name]">&nbsp;&nbsp;&nbsp;Message Status: {{ messageStatus[bowl.name] }}</label>
         </p>
       </div>
 
@@ -60,10 +61,10 @@
           <th> Location </th>
           <th> Check In </th>
           <th> Check out </th>
-          <th> Volunteering Time </th>
+          <th> Total Hours </th>
 
-          <tr *ngFor="let volunteer of bowl.volunteers">
-              <td> {{ volunteer.name }} </td>
+          <tr *ngFor="let volunteer of bowl.volunteers | volunteerSort:'lastname'">
+              <td> {{ volunteer.firstname }} {{ volunteer.lastname }} </td>
 
               <td *ngIf="volunteer.edit">
                 <input type="text" name="vAssign" #vassign 
@@ -83,7 +84,6 @@
               <td *ngIf="!volunteer.edit">
                 {{ volunteer.location }}
               </td>
-              <!--  Add this in and remove static case if editing of checkin time is needed
               <td *ngIf="volunteer.edit">
                 <input type="text" name="vCheckin" #vcheckin
                   (keyup.enter)="saveEdits(volunteer)"
@@ -91,10 +91,6 @@
                   value="{{ volunteer.checkin | volunteerTime }}">
               </td>
               <td *ngIf="!volunteer.edit">
-                {{ volunteer.checkin | volunteerTime }}
-              </td>
-              -->
-              <td>
                 {{ volunteer.checkin | volunteerTime }}
               </td>
               <td *ngIf="volunteer.edit">
@@ -115,7 +111,9 @@
               <td *ngIf="!bowl.isClosed && volunteer.edit">
                 <button class="pmd-button" (click)="saveEdits(volunteer)">Save</button>
               </td>
-              
+              <td *ngIf="!bowl.isClosed && volunteer.edit">
+                <button class="pmd-button" (click)="deleteVolunteer(volunteer)">Delete</button>
+              </td>
           </tr>
         </table>
       </ul>

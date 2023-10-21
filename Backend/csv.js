@@ -37,7 +37,8 @@ class CSV_parser {
             })
             .on('data', (row) => {
               let newRow = {
-                name: row['FirstName'] + ' ' + row['LastName'],
+                firstname: row['FirstName'],
+                lastname: row['LastName'],
                 email: row['Email'],
                 phone: parseInt(row['CellPhone'].replace(/\-/g, "")),
                 assignment: row['ROLE'],
@@ -45,7 +46,7 @@ class CSV_parser {
               };
 
               // We just need the name and phone for app functionality
-              if(newRow.name && (newRow.name != "") && newRow.phone && (newRow.phone != "")){
+              if (newRow.firstname && (newRow.firstname != "") && newRow.lastname && (newRow.lastname != "") && newRow.phone && (newRow.phone != "")) {
                 rows.push(newRow);
               } else {
                 const rowRepresentation = [
@@ -139,8 +140,8 @@ class CSV_parser {
   }
 
   generate_event_id(length){
-    // allowed characters: A-Z, 2-9 (no I,O or 0,1)
-    const spaces = [ [50, 57], [65, 72], [74, 78], [80, 90] ];
+    // allowed characters: A-Z, 2-9 (no G,I,O or 0,1,6)
+    const spaces = [ [50, 53], [55, 57], [65, 70], [74, 78], [80, 90] ];
     let str = "";
     for (let i=0; i<length; i++){
       // pick letter or number, then pick a character and append it

@@ -38,34 +38,36 @@ module.exports = function(app, dbconn) {
                     if (sendOne) {
                         let uid = 0;
                         for (let item of items[0].volunteers) {
-                            if (item['name'] === req.body.toWho) {
+                            let name = item['firstname'] + ' ' + item['lastname'];
+                            if (name === req.body.toWho) {
                                 uid = item['id'];
                                 break;
                             }
                         }
                         if (uid === 0) {
-                            res.status(400);
-                            res.send('Volunteer was not found!');
+                            res.status(400).send({'error': true, 'message': 'Volunteer was not found!'});
                             console.error('Volunteer not found: ', req.body.toWho);
                         } else {
                             messaging.messageOne(dbconn, uid, payload)
                             .then((response) => {
                                 console.log(response);
+                                res.send({'response' : 'Successfully sent message to ' + req.body.toWho});
                             })
                             .catch((err) => {
                                 console.error('push error', err);
+                                res.send({'response' : 'Error sending message to ' + req.body.toWho});
                             });
-                            res.send('Successfully updated message to volunteer');
                         }
                     } else {
                         messaging.messageAll(dbconn, req.body.eventId.toUpperCase(), payload)
                         .then((response) => {
                             console.log(response);
+                            res.send({'response' : response});
                         })
                         .catch((err) => {
                             console.error('push error', err);
+                            res.send({'response' : 'Error sending message to all volunteers'});
                         });
-                        res.send('Successfully updated message');
                     }
                 });
             }
