@@ -89,11 +89,20 @@ export class HomePage implements OnInit {
           .then((blob) => blob.json())
 
           .then((json) => {
-            if (json.name && json.assignment && json.location) {
+            if (json.name) {
               // set the values that are bound in the template
               this.personName = json.name;
-              this.personAssignment = json.assignment;
-              this.personLocation = json.location;
+              // If the assignment or location is null, set to "None" to avoid display errors
+              if (json.assignment) {
+                this.personAssignment = json.assignment;
+              } else {
+                this.personAssignment = 'None';
+              }
+              if (json.location) {
+                this.personLocation = json.location;
+              } else {
+                this.personLocation = 'None';
+              }
               // If the backend needs our token, get it again
               if (json.tokenNeeded && (json.tokenNeeded === 'yes')) {
                 this.pushService.register(

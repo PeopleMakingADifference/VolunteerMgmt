@@ -13,10 +13,11 @@ module.exports = function(app, dbconn) {
                             } else {
                               console.log('Token is needed! for uid:' + v.id);
                             }
+                            // Return 'None' if assignment/location missing to avoid app errors
                             res.send({
                                 'name': firstname + ' ' + lastname,
-                                'assignment': assignment,
-                                'location': location,
+                                'assignment': !assignment ? 'None' : assignment,
+                                'location': !location ? 'None' : location,
                                 'tokenNeeded': tokenNeeded,
                             });
                             return;
