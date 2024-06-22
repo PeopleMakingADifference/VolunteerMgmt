@@ -3,11 +3,14 @@ module.exports = function(app, dbconn) {
   // The parameter must be name 'checkout'
   app.post('/update_checkin', function(req, res) {
       dbconn().then((db) => {
+        // Make sure phone number is only digits
+        const phoneNum = res.body.phone.replace(/\D/g,'');
+
         // if document with argument phone exists then update, otherwise return UID not found
         db.collection('bowls').find(
           {
             'id': req.body.eventId.toUpperCase(),
-            'volunteers.phone': parseInt(req.body.phone),
+            'volunteers.phone': parseInt(phoneNum),
           },
           {
             'volunteers.$': 1,
@@ -20,12 +23,12 @@ module.exports = function(app, dbconn) {
             } else {
               // The above find produces all volunteers for the event...
               for (let v of items[0].volunteers) {
-                if (v.phone === parseInt(req.body.phone)) {
+                if (v.phone === parseInt(phoneNum)) {
                   if (!v.checkin) {
                     db.collection('bowls').updateOne(
                       {
                         'id': req.body.eventId.toUpperCase(),
-                        'volunteers.phone': parseInt(req.body.phone),
+                        'volunteers.phone': parseInt(phoneNum),
                       },
                       {
                         $set: {'volunteers.$.checkin': Date.now()},
@@ -40,7 +43,7 @@ module.exports = function(app, dbconn) {
                   const {id, firstname, lastname} = v;
 
                   // send the sms verification token
-                  sms(dbconn, req.body.phone, id, req.body.debug);
+                  sms(dbconn, phoneNum, id, req.body.debug);
 
                   res.send({'id': id, 'name': firstname + ' ' + lastname});
                   return;
