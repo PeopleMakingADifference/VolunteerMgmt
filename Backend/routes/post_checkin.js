@@ -4,7 +4,7 @@ module.exports = function(app, dbconn) {
   app.post('/update_checkin', function(req, res) {
       dbconn().then((db) => {
         // Make sure phone number is only digits
-        const phoneNum = res.body.phone.replace(/\D/g,'');
+        const phoneNum = req.body.phone.replace(/\D/g,'');
 
         // if document with argument phone exists then update, otherwise return UID not found
         db.collection('bowls').find(
