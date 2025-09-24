@@ -1,6 +1,6 @@
 {
   "name": "pmd-server",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Volunteer management event server",
   "engines": {
     "node": "18.x"
