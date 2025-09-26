@@ -1,18 +1,18 @@
 PODS:
-  - Capacitor (6.2.1):
+  - Capacitor (7.4.3):
     - CapacitorCordova
-  - CapacitorApp (6.0.2):
+  - CapacitorApp (7.1.0):
     - Capacitor
-  - CapacitorCordova (6.2.1)
-  - CapacitorHaptics (6.0.2):
+  - CapacitorCordova (7.4.3)
+  - CapacitorHaptics (7.0.2):
     - Capacitor
-  - CapacitorKeyboard (6.0.3):
+  - CapacitorKeyboard (7.0.3):
     - Capacitor
-  - CapacitorPushNotifications (6.0.4):
+  - CapacitorPushNotifications (7.0.3):
     - Capacitor
-  - CapacitorSplashScreen (6.0.3):
+  - CapacitorSplashScreen (7.0.3):
     - Capacitor
-  - CapacitorStatusBar (6.0.2):
+  - CapacitorStatusBar (7.0.3):
     - Capacitor
   - Firebase/CoreOnly (7.11.0):
     - FirebaseCore (= 7.11.0)
@@ -117,14 +117,14 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  Capacitor: 1e0d0e7330dea9f983b50da737d8918abcf273f8
-  CapacitorApp: 2a8c3a0b0814322e5e6e15fe595f02c3808f0f8b
-  CapacitorCordova: 8d93e14982f440181be7304aa9559ca631d77fff
-  CapacitorHaptics: b53409aaca1203f79c6d0eb3ed5de40556339518
-  CapacitorKeyboard: 460c6f9ec5e52c84f2742d5ce2e67bbc7ab0ebb0
-  CapacitorPushNotifications: 1fc22ae360214a0ac0625c348d3aea217085163d
-  CapacitorSplashScreen: 68893659d77b5f82d753b3a70475082845e3039c
-  CapacitorStatusBar: 3b9ac7d0684770522c532d1158a1434512ab1477
+  Capacitor: b4741ca7affb32c1b70debd03df92cbf522d8a80
+  CapacitorApp: 846d4b4a1dbb19dd1e9029c08ba6f028aa7be862
+  CapacitorCordova: 435121e81a2df4d0034f0fb11fcefab5104cfdb5
+  CapacitorHaptics: 09d96bcb5a2b74ede8fd039b4cdf58fc43dcacf1
+  CapacitorKeyboard: 3822c3a0c6b58168f96ca562f9534ed095d40860
+  CapacitorPushNotifications: 729ade0d2791ec1969feaf931a15e28d929a6d70
+  CapacitorSplashScreen: d06ae8804808e9f649a08e7bb7f283c77b688084
+  CapacitorStatusBar: 7d8fcbd6768db014bd721d75e246590b014928e8
   Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
   FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
   FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
